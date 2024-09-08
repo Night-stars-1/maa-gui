@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 20:40:31
+ * @LastEditTime: 2024-09-08 22:51:02
  */
 import type { ElectronAPI } from '@electron-toolkit/preload'
 import type * as maa from '@nekosu/maa-node'
@@ -33,6 +33,15 @@ interface API {
     callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
   ) => Electron.IpcRenderer
   onEndRecognize: (
-    callback: (event: Electron.IpcRendererEvent, name: string, status: boolean) => void
+    callback: (event: Electron.IpcRendererEvent, id: number, name: string, status: boolean) => void
   ) => Electron.IpcRenderer
+  queryRecognitionDetail: (recoId: number) => Promise<{
+    info: {
+      name: string
+      hit: boolean
+      hit_box: maa.Rect
+      detail_json: string
+    }
+    image: ArrayBuffer
+  }>
 }

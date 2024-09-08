@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 20:40:25
+ * @LastEditTime: 2024-09-08 22:46:13
  */
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
@@ -23,8 +23,10 @@ const api = {
     callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
   ) => ipcRenderer.on('maa-start-recognize', callback),
   onEndRecognize: (
-    callback: (event: Electron.IpcRendererEvent, name: string, status: boolean) => void
-  ) => ipcRenderer.on('maa-end-recognize', callback)
+    callback: (event: Electron.IpcRendererEvent, id: number, name: string, status: boolean) => void
+  ) => ipcRenderer.on('maa-end-recognize', callback),
+  queryRecognitionDetail: (recoId: number) =>
+    ipcRenderer.invoke('maa-query-recognition-detail', recoId)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

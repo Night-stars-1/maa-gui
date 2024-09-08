@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 14:33:33
+ * @LastEditTime: 2024-09-09 00:10:29
  */
 import fs from 'fs'
 import path from 'path'
@@ -50,6 +50,19 @@ async function update(version: string, event: IpcMainEvent) {
 function extractZip(zipPath: string, outputDir: string, version: string, event: IpcMainEvent) {
   let totalFiles = 0
   let extractedFiles = 0
+
+  try {
+    fs.rmdirSync(path.join(outputDir, 'image'), { recursive: true })
+    console.log(`文件夹 ${path.join(outputDir, 'image')} 删除成功`)
+  } catch (err) {
+    console.error(`删除文件夹时出错: ${err}`)
+  }
+  try {
+    fs.rmdirSync(path.join(outputDir, 'pipeline'), { recursive: true })
+    console.log(`文件夹 ${path.join(outputDir, 'pipeline')} 删除成功`)
+  } catch (err) {
+    console.error(`删除文件夹时出错: ${err}`)
+  }
 
   // 统计 zip 文件中的总文件数
   fs.createReadStream(zipPath)

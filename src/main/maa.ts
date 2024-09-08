@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 19:59:49
+ * @LastEditTime: 2024-09-09 00:07:16
  */
 import fs from 'fs'
 import * as maa from '@nekosu/maa-node'
@@ -22,7 +22,7 @@ async function getDevices() {
   try {
     const devices = await maa.AdbController.find()
     if (!devices) {
-      console.log('未找到设备')
+      log('未找到设备')
       return []
     }
     return devices
@@ -95,6 +95,23 @@ function getInterface() {
   return data
 }
 
+function queryRecognitionDetail(recoId: maa.RecoId) {
+  // const imageHandle = maa.create_image_buffer()
+  // const result = maa.query_recognition_detail(recoId, imageHandle, null)
+  // let image: ArrayBuffer | null = null
+  // if (imageHandle) {
+  //   image = maa.get_image_encoded(imageHandle)
+  // }
+  // const imageHandle = maa.create_image_buffer()
+  const imageListHandle = maa.create_image_list_buffer()
+  const result = maa.query_recognition_detail(recoId, null, imageListHandle)
+  let image: ArrayBuffer | null = null
+  if (imageListHandle && maa.get_image_list_size(imageListHandle) > 0) {
+    image = maa.get_image_encoded(maa.get_image_list_at(imageListHandle, 0))
+  }
+  return { info: result, image }
+}
+
 ipcMain.on('maa-start', async (_, arg: string) => {
   if (!inst) {
     log('未初始化, 请前往设备选项卡，连接设备')
@@ -111,6 +128,8 @@ ipcMain.handle('maa-get-devices', () => getDevices())
 ipcMain.handle('maa-device-load', (_, device) => init(device))
 
 ipcMain.handle('maa-get-interface', () => getInterface())
+
+ipcMain.handle('maa-query-recognition-detail', (_, recoId) => queryRecognitionDetail(recoId))
 
 export default (_win: BrowserWindow) => {
   win = _win

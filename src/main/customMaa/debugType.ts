@@ -17,7 +17,7 @@ function handleDebug(data: DebugData) {
       // console.log('MissAll', detail.pre_hit_task, detail.list)
       break
     case 'Task.Debug.RecognitionResult':
-      sendEndRecognize(data.detail.name, data.detail.recognition.hit)
+      sendEndRecognize(data.detail.recognition.id, data.detail.name, data.detail.recognition.hit)
       break
     default:
       if (type.startsWith('Task.Debug')) return

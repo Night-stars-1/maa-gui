@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 19:50:07
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-07 21:29:14
+ * @LastEditTime: 2024-09-08 22:57:10
 -->
 
 <script setup lang="ts">
@@ -71,6 +71,9 @@ async function loadDevice(device: any) {
     >
       <v-card-text class="no-select text-card-content">
         {{ device.name }}
+        <br />
+        <br />
+        {{ device.adb_serial }}
       </v-card-text>
     </v-card>
     <v-btn v-if="!loading && devices?.length === 0" @click="getDevices">刷新</v-btn>
