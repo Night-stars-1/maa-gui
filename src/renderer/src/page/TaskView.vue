@@ -1,4 +1,11 @@
+<!--
+ * @Author: Night-stars-1 nujj1042633805@gmail.com
+ * @Date: 2024-09-06 23:41:24
+ * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
+ * @LastEditTime: 2024-09-09 12:05:23
+-->
 <script setup lang="ts">
+import TaskListCard from '@renderer/components/TaskListCard.vue'
 import { useSelectData } from '@stores/selectData'
 import { asyncComputed } from '@vueuse/core'
 import { VueDraggable } from 'vue-draggable-plus'
@@ -54,53 +61,7 @@ function stop() {
       </v-card>
     </v-col>
     <v-col class="d-flex">
-      <v-card class="select-card">
-        <v-list>
-          <VueDraggable
-            v-model="selectData"
-            :animation="150"
-            group="people"
-            class="flex flex-col gap-2 p-4 w-300px m-auto bg-gray-500/5 rounded overflow-auto"
-          >
-            <v-list-item v-for="(task, index) in selectData" :key="index" :value="task?.entry">
-              <v-list-item-title class="no-select">{{ task.name }}</v-list-item-title>
-              <template #prepend>
-                <v-btn
-                  color="grey-lighten-1"
-                  icon="mdi-close"
-                  variant="text"
-                  size="small"
-                  @click="selectData.splice(index, 1)"
-                ></v-btn>
-              </template>
-              <template #append>
-                <v-dialog max-width="500">
-                  <template #activator="{ props: activatorProps }">
-                    <v-btn
-                      v-if="task.option"
-                      v-bind="activatorProps"
-                      color="grey-lighten-1"
-                      icon="mdi-cog-outline"
-                      variant="text"
-                      size="small"
-                    ></v-btn>
-                  </template>
-
-                  <template #default="{ isActive }">
-                    <TaskSetting
-                      v-if="task.option"
-                      v-model="selectData[index].optionData"
-                      :option-list="task.option"
-                      :option-data="data.option"
-                      @click="isActive.value = true"
-                    />
-                  </template>
-                </v-dialog>
-              </template>
-            </v-list-item>
-          </VueDraggable>
-        </v-list>
-      </v-card>
+      <TaskListCard v-model="selectData" :data="data" />
       <v-row>
         <v-col>
           <v-btn @click="start">启动</v-btn>
