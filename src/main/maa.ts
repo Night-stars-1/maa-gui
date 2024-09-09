@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 20:35:48
+ * @LastEditTime: 2024-09-10 00:29:33
  */
 import fs from 'fs'
 import maa from '@nekosu/maa-node'
@@ -80,6 +80,7 @@ async function start(task: Task[]) {
   for (const t of task) {
     const param = {}
     t.optionData?.forEach((item) => Object.assign(param, item))
+    t.param && Object.assign(param, t.param)
     await inst.post_task(t.entry, param).wait()
   }
   log(`执行完毕`)

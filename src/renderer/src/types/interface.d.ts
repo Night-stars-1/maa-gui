@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 13:14:57
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-07 16:20:55
+ * @LastEditTime: 2024-09-10 00:29:02
  */
 interface Interface {
   controller: Controller[]
@@ -45,6 +45,7 @@ interface Task {
   id: number
   name: string
   entry: string
+  param?: PurpleParam
   option?: string[]
   optionData?: PurpleParam[]
 }

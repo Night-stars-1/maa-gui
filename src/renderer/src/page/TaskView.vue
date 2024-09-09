@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 21:36:19
+ * @LastEditTime: 2024-09-10 00:05:20
 -->
 <script setup lang="ts">
 import { useSelectData } from '@stores/selectData'
@@ -45,7 +45,9 @@ function stop() {
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded"
           >
             <v-list-item v-for="task in data.task" :key="task.name" :value="task.entry">
-              <v-list-item-title class="no-select">{{ task.name }}</v-list-item-title>
+              <v-list-item-title class="no-select" :title="task.name">{{
+                task.name
+              }}</v-list-item-title>
               <template #append>
                 <v-btn
                   color="grey-lighten-1"
