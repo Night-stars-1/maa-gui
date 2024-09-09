@@ -2,10 +2,9 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 12:05:23
+ * @LastEditTime: 2024-09-09 21:36:19
 -->
 <script setup lang="ts">
-import TaskListCard from '@renderer/components/TaskListCard.vue'
 import { useSelectData } from '@stores/selectData'
 import { asyncComputed } from '@vueuse/core'
 import { VueDraggable } from 'vue-draggable-plus'
@@ -62,7 +61,7 @@ function stop() {
       </v-card>
     </v-col>
     <v-col class="d-flex">
-      <TaskListCard v-model="selectData" :data="data" :save="true" />
+      <task-list-card v-model="selectData" :data="data" :is-save="true" />
       <v-row>
         <v-col>
           <v-btn @click="start">启动</v-btn>

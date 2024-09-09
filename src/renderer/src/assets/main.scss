@@ -16,3 +16,9 @@
 #app {
   min-height: 100vh;
 }
+
+.v-expansion-panel-text:has(.v-card) {
+  .v-expansion-panel-text__wrapper {
+    padding: 0px;
+  }
+}

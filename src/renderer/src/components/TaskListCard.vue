@@ -1,10 +1,21 @@
-<!-- eslint-disable vue/no-mutating-props -->
-<!-- eslint-disable vue/no-mutating-props -->
+<!--
+ * @Author: Night-stars-1 nujj1042633805@gmail.com
+ * @Date: 2024-09-09 11:58:58
+ * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
+ * @LastEditTime: 2024-09-09 22:34:21
+-->
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
+import { addTask } from '@renderer/utils/taskUtils'
 
-const model = defineModel<Task[]>({ required: true })
-defineProps<{ data: Interface; save?: boolean }>()
+const name = ref('')
+
+const model = defineModel<Task[]>({ required: true, default: [] })
+defineProps<{ data: Interface; isSave?: boolean }>()
+
+defineEmits<{
+  update: [value: Task[]]
+}>()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onAdd(event: any) {
@@ -14,9 +25,38 @@ function onAdd(event: any) {
 
 <template>
   <v-card class="select-card">
-    <v-card-title class="d-flex align-center justify-space-between">
+    <v-card-title v-if="isSave" class="d-flex align-center justify-space-between">
       任务列表
-      <v-btn variant="tonal" size="small"> 保存 </v-btn>
+      <v-dialog max-width="500">
+        <template #activator="{ props: activatorProps }">
+          <v-btn v-bind="activatorProps" color="surface-variant" text="保存" variant="flat"></v-btn>
+        </template>
+
+        <template #default="{ isActive }">
+          <v-card title="任务集">
+            <v-card-text>
+              <v-text-field v-model="name" label="任务集名称"></v-text-field>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                v-if="isSave"
+                variant="tonal"
+                size="small"
+                @click="
+                  () => {
+                    addTask(name, model)
+                    isActive.value = false
+                  }
+                "
+              >
+                保存
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
     </v-card-title>
     <v-list>
       <VueDraggable
@@ -25,9 +65,9 @@ function onAdd(event: any) {
         group="people"
         class="flex flex-col gap-2 p-4 w-300px m-auto bg-gray-500/5 rounded overflow-auto"
         @add="onAdd"
+        @update="$emit('update', model)"
       >
         <v-list-item v-for="(task, index) in model" :key="task.id" :value="task?.entry">
-          {{ task.id }}
           <v-list-item-title class="no-select">{{ task.name }}</v-list-item-title>
           <template #prepend>
             <v-btn
@@ -35,7 +75,12 @@ function onAdd(event: any) {
               icon="mdi-close"
               variant="text"
               size="small"
-              @click="model.splice(index, 1)"
+              @click="
+                () => {
+                  model.splice(index, 1)
+                  $emit('update', model)
+                }
+              "
             ></v-btn>
           </template>
           <template #append>

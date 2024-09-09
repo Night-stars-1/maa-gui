@@ -62,15 +62,9 @@ const debouncedUpdate = debounce(update, 200)
       <v-list-item prepend-icon="mdi-tablet" title="设备" value="设备" to="/devices"></v-list-item>
       <v-list-item
         prepend-icon="mdi-calendar-check"
-        title="作业"
-        value="作业"
+        title="任务"
+        value="任务"
         to="/task"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-timeline-clock-outline"
-        title="流水线"
-        value="流水线"
-        to="/timeline"
       ></v-list-item>
       <v-list-item
         prepend-icon="mdi-list-box"
@@ -78,7 +72,12 @@ const debouncedUpdate = debounce(update, 200)
         value="任务集"
         to="/task-list"
       ></v-list-item>
-
+      <v-list-item
+        prepend-icon="mdi-timeline-clock-outline"
+        title="流水线"
+        value="流水线"
+        to="/timeline"
+      ></v-list-item>
       <v-list-item prepend-icon="mdi-math-log" title="日志" value="日志" to="/log"></v-list-item>
       <v-spacer />
       <v-list-item

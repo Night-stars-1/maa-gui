@@ -2,10 +2,10 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 11:50:59
+ * @LastEditTime: 2024-09-09 20:35:48
  */
 import fs from 'fs'
-import * as maa from '@nekosu/maa-node'
+import maa from '@nekosu/maa-node'
 import { BrowserWindow, ipcMain } from 'electron'
 import { registerCustom } from './customMaa'
 import logger, { log } from './utils/logger'
