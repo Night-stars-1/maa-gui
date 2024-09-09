@@ -50,7 +50,7 @@ jobs:
       - name: release
         uses: softprops/action-gh-release@v2.0.8
         with:
-          name: 黑月无人驾驶 ${{ github.ref_name }}
+          name: M5A-GUI ${{ github.ref_name }}
           body: ${{ steps.generate_changelog.outputs.changelog }}
           files: |
             dist/*.exe
