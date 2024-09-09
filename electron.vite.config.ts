@@ -16,8 +16,12 @@ const packageJson = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 
 const appVersion = packageJson.version
 
 const envPath = resolve(__dirname, '.env')
+let envContent = readFileSync(envPath, 'utf-8')
 
-writeFileSync(envPath, `VITE_VERSION=${appVersion}\n`, { flag: 'a' })
+const versionLine = `VITE_VERSION=${appVersion}\n`
+envContent = envContent.replace(/VITE_VERSION=.*/g, versionLine.trim())
+
+writeFileSync(envPath, envContent, 'utf-8')
 
 export default defineConfig({
   main: {
