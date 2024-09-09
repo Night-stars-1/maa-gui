@@ -1,4 +1,4 @@
-# mma-gui
+# maa-gui
 
 An Electron application with Vue
 
