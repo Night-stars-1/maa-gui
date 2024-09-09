@@ -20,6 +20,7 @@ function setSelectData(task: Task) {
   if (task.option) {
     task.optionData = task.option.map((item) => data.value.option[item].cases[0].param)
   }
+  task.id = selectData.value.length + 1
   selectData.value.push(task)
 }
 
@@ -61,7 +62,7 @@ function stop() {
       </v-card>
     </v-col>
     <v-col class="d-flex">
-      <TaskListCard v-model="selectData" :data="data" />
+      <TaskListCard v-model="selectData" :data="data" :save="true" />
       <v-row>
         <v-col>
           <v-btn @click="start">启动</v-btn>

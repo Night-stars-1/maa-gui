@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 00:33:58
+ * @LastEditTime: 2024-09-09 12:12:40
 -->
 <script setup lang="ts">
 import { debounce } from 'lodash'
@@ -72,6 +72,13 @@ const debouncedUpdate = debounce(update, 200)
         value="流水线"
         to="/timeline"
       ></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-list-box"
+        title="任务集"
+        value="任务集"
+        to="/task-list"
+      ></v-list-item>
+
       <v-list-item prepend-icon="mdi-math-log" title="日志" value="日志" to="/log"></v-list-item>
       <v-spacer />
       <v-list-item

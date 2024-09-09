@@ -48,6 +48,13 @@ const routes: RouteRecordRaw[] = [
       title: '流水线'
     },
     component: ActionTimeLine
+  },
+  {
+    path: '/task-list',
+    meta: {
+      title: '任务集'
+    },
+    component: ActionTimeLine
   }
 ]
 

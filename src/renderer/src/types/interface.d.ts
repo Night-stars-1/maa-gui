@@ -42,6 +42,7 @@ interface Resource {
 }
 
 interface Task {
+  id: number
   name: string
   entry: string
   option?: string[]
