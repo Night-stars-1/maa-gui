@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 22:51:02
+ * @LastEditTime: 2024-09-09 11:13:23
  */
 import type { ElectronAPI } from '@electron-toolkit/preload'
 import type * as maa from '@nekosu/maa-node'
@@ -15,6 +15,7 @@ declare global {
 }
 
 interface API {
+  version: () => string
   start: (task: string) => void
   stop: () => void
   getDevices: () => Promise<

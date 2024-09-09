@@ -101,8 +101,14 @@ function stop() {
           </VueDraggable>
         </v-list>
       </v-card>
-      <v-btn @click="start">启动</v-btn>
-      <v-btn @click="stop">停止</v-btn>
+      <v-row>
+        <v-col>
+          <v-btn @click="start">启动</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn @click="stop">停止</v-btn>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
   <v-alert v-else text="未找到任务索引，请检查更新" type="error"></v-alert>

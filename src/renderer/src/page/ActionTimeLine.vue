@@ -111,6 +111,7 @@ async function showImage(recoId: number) {
             class="ma-2"
             :color="`${data.status == 1 ? 'success' : data.status == 0 ? 'info' : 'error'}`"
             aria-label=""
+            @click="() => {}"
             @dblclick="showImage(data.id)"
           >
             {{ name }}

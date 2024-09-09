@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 17:06:15
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-07 18:40:56
+ * @LastEditTime: 2024-09-09 11:34:03
  */
 import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
@@ -10,6 +10,14 @@ import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import { readFileSync, writeFileSync } from 'fs'
+
+const packageJson = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8'))
+const appVersion = packageJson.version
+
+const envPath = resolve(__dirname, '.env')
+
+writeFileSync(envPath, `VITE_VERSION=${appVersion}\n`, { flag: 'a' })
 
 export default defineConfig({
   main: {
