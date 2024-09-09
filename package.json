@@ -1,6 +1,6 @@
 {
   "name": "mma-gui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
   "author": "example.com",
