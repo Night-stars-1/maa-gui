@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 00:07:16
+ * @LastEditTime: 2024-09-09 10:23:22
  */
 import fs from 'fs'
 import * as maa from '@nekosu/maa-node'
@@ -114,8 +114,9 @@ function queryRecognitionDetail(recoId: maa.RecoId) {
 
 ipcMain.on('maa-start', async (_, arg: string) => {
   if (!inst) {
-    log('未初始化, 请前往设备选项卡，连接设备')
-    return
+    log('未初始化, 连接默认设备')
+    const devices = await getDevices()
+    devices.length > 0 && init(devices[0])
   }
   const task: Task[] = JSON.parse(arg)
   start(task)
