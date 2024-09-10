@@ -1,6 +1,6 @@
 {
   "name": "maa-gui",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
   "author": "example.com",
