@@ -1,5 +1,5 @@
 {
-  "name": "maa-gui",
+  "name": "m5a-gui",
   "version": "1.0.10",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",

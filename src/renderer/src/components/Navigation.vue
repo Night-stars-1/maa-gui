@@ -9,7 +9,7 @@ import { debounce } from 'lodash'
 import { useSnackbar } from '@stores/snackbar'
 import { useDebug } from '@stores/debug'
 
-const { isDebug } = useDebug()
+const { isDebug } = storeToRefs(useDebug())
 
 const updating = ref(false)
 const updateProgress = ref('0')
