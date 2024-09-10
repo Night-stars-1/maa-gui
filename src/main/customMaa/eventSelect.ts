@@ -52,7 +52,7 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
     OCR: { recognition: 'OCR', expected: '', roi: [593, 113, 516, 46] }
   })
   if (!data) {
-    log('事件标题获取失败')
+    log('未识别到内容')
     return null
   }
   const outDetail = JSON.parse(data.out_detail)
@@ -65,7 +65,7 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
   const score = textData.score
   const option = DATA[title]
   if (!option) {
-    log('事件标题获取失败')
+    log('未知事件')
     return null
   }
   log(`识别到${title}, 相似度: ${Math.round(score * 100)}%, 选择: ${option}`)
@@ -73,7 +73,7 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
     OCR: { recognition: 'OCR', expected: option, roi: [598, 383, 478, 217] }
   })
   if (!optionData) {
-    log('事件选择失败')
+    log('事件选项识别失败')
     return null
   }
   const optionBox = optionData.out_box
