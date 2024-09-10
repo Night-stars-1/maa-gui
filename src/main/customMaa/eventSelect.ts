@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 14:57:20
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 16:55:36
+ * @LastEditTime: 2024-09-10 12:55:33
  */
 import * as maa from '@nekosu/maa-node'
 import { log } from '../utils/logger'
@@ -87,6 +87,11 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
   return optionData
 }
 
-export default (inst: maa.Instance) => {
+export default (inst: maa.Instance): PurpleParam => {
   inst.register_custom_recognizer('event_select', eventSelect)
+  return {
+    advance_two: {
+      next: 'event_select'
+    }
+  }
 }

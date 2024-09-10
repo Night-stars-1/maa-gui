@@ -2,15 +2,15 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 17:06:15
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 12:25:34
+ * @LastEditTime: 2024-09-10 13:13:26
  */
 import path, { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { defineConfig, externalizeDepsPlugin, loadEnv } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { cpSync, existsSync, readFileSync, writeFileSync } from 'fs'
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 
 function setVersion() {
   const packageJson = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8'))
@@ -25,6 +25,8 @@ function setVersion() {
   writeFileSync(envPath, envContent, 'utf-8')
 }
 
+const env = loadEnv('production')
+
 function configureOcrModel() {
   const ocrAssetsDir = path.join('resources', 'MaaCommonAssets', 'OCR')
 
@@ -34,10 +36,11 @@ function configureOcrModel() {
     process.exit(1) // 退出程序
   }
 
-  const ocrDir = path.join('resources', 'resource_picli', 'base', 'model', 'ocr')
+  const ocrDir = path.join(env.VITE_MAIN_UNRES_OUT_DIR, 'model', 'ocr')
 
   // 仅当 OCR 目录不存在时，复制默认的 OCR 模型
   if (!existsSync(ocrDir)) {
+    mkdirSync(ocrDir, { recursive: true })
     cpSync(
       path.join(ocrAssetsDir, 'ppocr_v4', 'zh_cn'),
       ocrDir,

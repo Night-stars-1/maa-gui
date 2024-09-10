@@ -2,12 +2,12 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 00:29:33
+ * @LastEditTime: 2024-09-10 12:57:11
  */
 import fs from 'fs'
 import maa from '@nekosu/maa-node'
 import { BrowserWindow, ipcMain } from 'electron'
-import { registerCustom } from './customMaa'
+import { registerCustom, customParam } from './customMaa'
 import logger, { log } from './utils/logger'
 import { handleDebug } from './customMaa/debugType'
 
@@ -81,6 +81,7 @@ async function start(task: Task[]) {
     const param = {}
     t.optionData?.forEach((item) => Object.assign(param, item))
     t.param && Object.assign(param, t.param)
+    Object.assign(customParam, t.param)
     await inst.post_task(t.entry, param).wait()
   }
   log(`执行完毕`)
