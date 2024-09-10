@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: mma-gui
+appId: com.electron.m5a
+productName: m5a-gui
 icon: resources\icon.png
 directories:
   buildResources: build

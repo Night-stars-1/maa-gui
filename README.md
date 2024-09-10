@@ -23,6 +23,7 @@ $ pnpm install
 
 ### Development
 
+- 根据`.env`的提示更改`.env`
 ```bash
 $ pnpm dev
 ```
