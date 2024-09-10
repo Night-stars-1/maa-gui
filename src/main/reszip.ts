@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 00:10:29
+ * @LastEditTime: 2024-09-10 12:32:53
  */
 import fs from 'fs'
 import path from 'path'
@@ -15,7 +15,7 @@ import { upRes } from './maa'
 async function isUpdate() {
   let version = '0'
   try {
-    const response = await axios.get('https://raw.githubusercontent.com/MAWHA/MWA/main/version.txt')
+    const response = await axios.get(import.meta.env.VITE_MAIN_VERSION)
     version = response.data.toString()
     const localVersion = fs
       .readFileSync('./resources/resource_picli/base/version.txt', 'utf-8')
@@ -29,7 +29,7 @@ async function isUpdate() {
 async function update(version: string, event: IpcMainEvent) {
   try {
     // 发出 GET 请求，响应类型设置为 arraybuffer 以处理二进制文件
-    const response = await axios.get('https://raw.githubusercontent.com/MAWHA/MWA/main/res.zip', {
+    const response = await axios.get(import.meta.env.VITE_MAIN_RESOURCES, {
       responseType: 'arraybuffer',
       onDownloadProgress: (progressEvent) => {
         const totalLength = progressEvent.total || 1 // 防止 total 为 0
