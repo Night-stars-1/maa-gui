@@ -32,7 +32,7 @@ interface CaseItem {
 
 interface PurpleParam {
   [key: string]: {
-    next: string | []
+    next: string | string[]
   }
 }
 

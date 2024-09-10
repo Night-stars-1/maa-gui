@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 14:57:20
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 12:55:33
+ * @LastEditTime: 2024-09-11 00:33:06
  */
 import * as maa from '@nekosu/maa-node'
 import { log } from '../utils/logger'
@@ -52,6 +52,7 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
     OCR: { recognition: 'OCR', expected: '', roi: [593, 113, 516, 46] }
   })
   if (!data) {
+    log('事件标题获取失败')
     return null
   }
   const outDetail = JSON.parse(data.out_detail)
@@ -87,11 +88,33 @@ const eventSelect: maa.CustomRecognizer = async (ctx, _, __, image) => {
   return optionData
 }
 
-export default (inst: maa.Instance): PurpleParam => {
+export default (inst: maa.Instance): maa.PipelineDecl => {
   inst.register_custom_recognizer('event_select', eventSelect)
   return {
     advance_two: {
-      next: 'event_select'
+      next: [
+        'event_select',
+        'war_one',
+        'cultural_relic',
+        'terminal',
+        'without_one',
+        'abandon_one',
+        'advance_one_man',
+        'advance_one_women',
+        'war_five',
+        'upgrade_one',
+        'descending_one',
+        'advance_two',
+        'advance_three'
+      ]
+    },
+    event_select: {
+      recognition: 'Custom',
+      custom_recognition: 'event_select',
+      custom_recognition_param: {
+        my_rec_key: 'my_rec_value'
+      },
+      next: ['predestination', 'perfect', 'keep', 'keyword', 'upgrade_one', 'choose']
     }
   }
 }
