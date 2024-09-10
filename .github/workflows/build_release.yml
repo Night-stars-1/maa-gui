@@ -22,6 +22,7 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
+          submodules: true
 
       - name: Generate Changelog
         id: generate_changelog

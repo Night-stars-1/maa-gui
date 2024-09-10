@@ -1,3 +1,9 @@
+<!--
+ * @Author: Night-stars-1 nujj1042633805@gmail.com
+ * @Date: 2024-09-06 17:06:15
+ * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
+ * @LastEditTime: 2024-09-10 12:23:18
+-->
 # maa-gui
 
 An Electron application with Vue
@@ -11,6 +17,7 @@ An Electron application with Vue
 ### Install
 
 ```bash
+git clone --recursive https://github.com/Night-stars-1/maa-gui.git
 $ pnpm install
 ```
 
