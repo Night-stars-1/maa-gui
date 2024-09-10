@@ -138,6 +138,10 @@ ipcMain.handle('maa-get-interface', () => getInterface())
 
 ipcMain.handle('maa-query-recognition-detail', (_, recoId) => queryRecognitionDetail(recoId))
 
+ipcMain.on('maa-debug', (_, isDebug: boolean) => {
+  maa.set_global_option('DebugMessage', isDebug)
+})
+
 export default (_win: BrowserWindow) => {
   win = _win
   logger(win)

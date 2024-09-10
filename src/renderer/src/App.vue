@@ -5,10 +5,10 @@
  * @LastEditTime: 2024-09-07 21:14:57
 -->
 <script setup lang="ts">
-import { useLogMessage } from '@stores/logMessage'
-import { useSnackbar } from './plugins/pinia/snackbar'
+import { init } from '@renderer/plugins/pinia'
+import { useSnackbar } from '@renderer/plugins/pinia/snackbar'
 
-useLogMessage() // 触发log监听，避免进入log页面才触发，导致之前的log没有被监听
+init()
 
 const { snackbar, snackbarMsg } = storeToRefs(useSnackbar())
 </script>

@@ -2,11 +2,14 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 12:12:40
+ * @LastEditTime: 2024-09-10 14:12:54
 -->
 <script setup lang="ts">
 import { debounce } from 'lodash'
 import { useSnackbar } from '@stores/snackbar'
+import { useDebug } from '@stores/debug'
+
+const { isDebug } = useDebug()
 
 const updating = ref(false)
 const updateProgress = ref('0')
@@ -73,6 +76,7 @@ const debouncedUpdate = debounce(update, 200)
         to="/task-list"
       ></v-list-item>
       <v-list-item
+        v-if="isDebug"
         prepend-icon="mdi-timeline-clock-outline"
         title="流水线"
         value="流水线"
@@ -85,6 +89,12 @@ const debouncedUpdate = debounce(update, 200)
         title="检查更新"
         value="检查更新"
         @click="debouncedUpdate"
+      ></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-information-outline"
+        title="关于"
+        value="关于"
+        to="/about"
       ></v-list-item>
     </v-list>
   </v-navigation-drawer>

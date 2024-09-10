@@ -11,6 +11,7 @@ import LogView from '@renderer/page/LogView.vue'
 import DeviceView from '@renderer/page/DeviceView.vue'
 import TaskListView from '@renderer/page/TaskListView.vue'
 import ActionTimeLineView from '@renderer/page/ActionTimeLineView.vue'
+import AboutView from '@renderer/page/AboutView.vue'
 
 const defaultTitle = document.title
 
@@ -56,6 +57,13 @@ const routes: RouteRecordRaw[] = [
       title: '任务集'
     },
     component: TaskListView
+  },
+  {
+    path: '/about',
+    meta: {
+      title: '关于'
+    },
+    component: AboutView
   }
 ]
 

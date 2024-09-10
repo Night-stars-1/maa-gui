@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 11:13:23
+ * @LastEditTime: 2024-09-10 14:18:31
  */
 import type { ElectronAPI } from '@electron-toolkit/preload'
 import type * as maa from '@nekosu/maa-node'
@@ -45,4 +45,5 @@ interface API {
     }
     image: ArrayBuffer
   }>
+  setDebug: (isDebug: boolean) => void
 }

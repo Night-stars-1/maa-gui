@@ -26,7 +26,8 @@ const api = {
     callback: (event: Electron.IpcRendererEvent, id: number, name: string, status: boolean) => void
   ) => ipcRenderer.on('maa-end-recognize', callback),
   queryRecognitionDetail: (recoId: number) =>
-    ipcRenderer.invoke('maa-query-recognition-detail', recoId)
+    ipcRenderer.invoke('maa-query-recognition-detail', recoId),
+  setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
