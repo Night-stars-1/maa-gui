@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 13:21:20
+ * @LastEditTime: 2024-09-10 13:47:03
  */
 import fs from 'fs'
 import path from 'path'
@@ -82,7 +82,7 @@ function extractZip(
   fs.createReadStream(zipPath)
     .pipe(unzipper.Parse())
     .on('entry', (entry) => {
-      if (entry.path.startsWith(`${targetDir}`)) {
+      if (entry.path.startsWith(targetDir) || entry.path.includes('interface.json')) {
         totalFiles++
       }
       entry.autodrain() // 只是统计，不实际处理条目
@@ -93,8 +93,16 @@ function extractZip(
         .pipe(unzipper.Parse())
         .on('entry', (entry) => {
           // 只处理位于目标文件夹的文件
-          if (entry.path.startsWith(`${targetDir}`)) {
-            const relativePath = entry.path.replace(`${targetDir}`, '') // 去除目标文件夹前缀，使其解压到outputDir的根目录
+          if (entry.path === import.meta.env.VITE_MAIN_UNRES_INTERFACE) {
+            entry
+              .pipe(fs.createWriteStream(path.join(outputDir, 'interface.json')))
+              .on('finish', () => {
+                extractedFiles++
+                const progress = (extractedFiles / totalFiles) * 100
+                event.sender.send('extract-progress', progress.toFixed(2))
+              })
+          } else if (entry.path.startsWith(targetDir)) {
+            const relativePath = entry.path.replace(targetDir, '') // 去除目标文件夹前缀，使其解压到outputDir的根目录
             const filePath = path.join(outputDir, relativePath)
 
             // 目录时自动创建目录
@@ -113,6 +121,8 @@ function extractZip(
                 event.sender.send('extract-progress', progress.toFixed(2))
               })
             }
+          } else {
+            entry.autodrain()
           }
         })
         .on('close', () => {

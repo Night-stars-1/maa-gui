@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_MAIN_RESOURCES: string
   readonly VITE_MAIN_UNRES_TARGET_DIR: string
   readonly VITE_MAIN_UNRES_OUT_DIR: string
+  readonly VITE_MAIN_UNRES_INTERFACE: string
   // more env variables...
 }
 
