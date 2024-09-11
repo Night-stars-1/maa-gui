@@ -89,7 +89,7 @@ async function start(task: Task[]) {
 }
 
 async function stop() {
-  inst.post_stop()
+  inst && inst.post_stop()
 }
 
 function getInterface() {
@@ -148,4 +148,4 @@ export default (_win: BrowserWindow) => {
   logger(win)
 }
 
-export { upRes }
+export { upRes, stop }
