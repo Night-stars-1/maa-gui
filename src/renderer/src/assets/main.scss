@@ -1,9 +1,9 @@
-
-
 /* 仅对 Chrome, Edge, 和 Safari 有效 */
 ::-webkit-scrollbar {
-  width: 0; /* 将滚动条宽度设置为0来隐藏它 */
-  height: 0; /* 同样适用于水平滚动条 */
+  width: 0;
+  /* 将滚动条宽度设置为0来隐藏它 */
+  height: 0;
+  /* 同样适用于水平滚动条 */
 }
 
 .no-select {
@@ -21,4 +21,19 @@
   .v-expansion-panel-text__wrapper {
     padding: 0px;
   }
+}
+
+.hover-underline {
+  text-decoration: underline;
+  color: blue;
+  text-decoration-color: blue;
+
+  &:hover {
+    color: green;
+    text-decoration-color: green;
+  }
+}
+
+.clickable {
+  cursor: pointer; /* 设置为点击的手形图标 */
 }

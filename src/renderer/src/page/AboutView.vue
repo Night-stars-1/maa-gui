@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { useDebug } from '@stores/debug'
-
-const { isDebug } = storeToRefs(useDebug())
+function openExternal(url: string) {
+  window.api.openExternal(url)
+}
 </script>
 
 <template>
-  <div class="d-flex justify-center">
-    <v-switch v-model="isDebug" label="Debug"></v-switch>
-  </div>
+  <p
+    class="hover-underline clickable"
+    @click="openExternal('https://github.com/Night-stars-1/maa-gui')"
+  >
+    项目地址
+  </p>
 </template>

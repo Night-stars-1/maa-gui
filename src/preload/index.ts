@@ -2,9 +2,9 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 20:36:50
+ * @LastEditTime: 2024-09-11 16:58:20
  */
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import type { AdbInfo } from '@nekosu/maa-node'
 
@@ -16,8 +16,8 @@ const api = {
   deviceLoad: (device: AdbInfo) => ipcRenderer.invoke('maa-device-load', device),
   log: (callback: (event: Electron.IpcRendererEvent, message: string) => void) =>
     ipcRenderer.on('log-message', callback),
-  upDate: (version: string) => ipcRenderer.send('res-update', version),
-  isUpdate: () => ipcRenderer.invoke('res-is-update'),
+  upDate: (version: string, proxyUrl: string) => ipcRenderer.send('res-update', version, proxyUrl),
+  isUpdate: (proxyUrl: string) => ipcRenderer.invoke('res-is-update', proxyUrl),
   getInterface: () => ipcRenderer.invoke('maa-get-interface'),
   onStartRecognize: (
     callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
@@ -27,7 +27,8 @@ const api = {
   ) => ipcRenderer.on('maa-end-recognize', callback),
   queryRecognitionDetail: (recoId: number) =>
     ipcRenderer.invoke('maa-query-recognition-detail', recoId),
-  setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug)
+  setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug),
+  openExternal: (url: string) => shell.openExternal(url)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

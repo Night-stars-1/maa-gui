@@ -27,6 +27,7 @@
     "electron-updater": "^6.1.7",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
+    "minio": "^8.0.1",
     "pinia": "^2.2.2",
     "sass": "^1.78.0",
     "unplugin-auto-import": "^0.18.2",

@@ -7,3 +7,4 @@ res.zip
 logs
 resources/resource_picli
 *.local
+update.ts

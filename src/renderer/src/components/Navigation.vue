@@ -2,14 +2,16 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 14:12:54
+ * @LastEditTime: 2024-09-11 19:43:28
 -->
 <script setup lang="ts">
 import { debounce } from 'lodash'
 import { useSnackbar } from '@stores/snackbar'
 import { useDebug } from '@stores/debug'
+import { useProxyList } from '@stores/proxyList'
 
 const { isDebug } = storeToRefs(useDebug())
+const { proxy } = storeToRefs(useProxyList())
 
 const updating = ref(false)
 const updateProgress = ref('0')
@@ -37,14 +39,16 @@ window.electron.ipcRenderer.on('res-download', (_, message) => {
   updateProgress.value = '0'
 })
 
-async function update() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function update(event: any) {
+  event.target?.closest('.v-list-item')?.classList?.remove('v-list-item--active')
   updateTitle.value = '检测更新中...'
-  const version = await window.api.isUpdate()
+  const version = await window.api.isUpdate(proxy.value)
   if (typeof version === 'string') {
     updateTitle.value = '下载资源包中...'
     updateProgress.value = '0'
     updating.value = true
-    window.api.upDate(version)
+    window.api.upDate(version, proxy.value)
   } else {
     createToast('已是最新版本')
   }
@@ -90,6 +94,7 @@ const debouncedUpdate = debounce(update, 200)
         value="检查更新"
         @click="debouncedUpdate"
       ></v-list-item>
+      <v-list-item prepend-icon="mdi-cog" title="设置" value="设置" to="/setting"></v-list-item>
       <v-list-item
         prepend-icon="mdi-information-outline"
         title="关于"

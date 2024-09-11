@@ -12,6 +12,7 @@ import DeviceView from '@renderer/page/DeviceView.vue'
 import TaskListView from '@renderer/page/TaskListView.vue'
 import ActionTimeLineView from '@renderer/page/ActionTimeLineView.vue'
 import AboutView from '@renderer/page/AboutView.vue'
+import SettingView from '@renderer/page/SettingView.vue'
 
 const defaultTitle = document.title
 
@@ -64,6 +65,13 @@ const routes: RouteRecordRaw[] = [
       title: '关于'
     },
     component: AboutView
+  },
+  {
+    path: '/setting',
+    meta: {
+      title: '设置'
+    },
+    component: SettingView
   }
 ]
 
