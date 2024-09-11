@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-11 19:23:37
+ * @LastEditTime: 2024-09-12 00:55:27
  */
 import fs from 'fs'
 import path from 'path'
@@ -16,13 +16,14 @@ async function isUpdate(proxyUrl: string) {
   let version = '0'
   try {
     if (!import.meta.env.VITE_MAIN_VERSION) return version
-    const response = await axios.get(`${proxyUrl}/${import.meta.env.VITE_MAIN_VERSION}`)
+    const response = await axios.get<number>(proxyUrl + import.meta.env.VITE_MAIN_VERSION)
     version = response.data.toString()
     const localVersion = fs
       .readFileSync(`${import.meta.env.VITE_MAIN_UNRES_OUT_DIR}/version.txt`, 'utf-8')
       .trim()
     return version !== localVersion ? version : false
-  } catch {
+  } catch (error: any) {
+    console.error(error)
     return version
   }
 }
@@ -30,7 +31,7 @@ async function isUpdate(proxyUrl: string) {
 async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
   try {
     // 发出 GET 请求，响应类型设置为 arraybuffer 以处理二进制文件
-    const response = await axios.get(`${proxyUrl}/${import.meta.env.VITE_MAIN_RESOURCES}`, {
+    const response = await axios.get(proxyUrl + import.meta.env.VITE_MAIN_RESOURCES, {
       responseType: 'arraybuffer',
       onDownloadProgress: (progressEvent) => {
         const totalLength = progressEvent.total || 1 // 防止 total 为 0
@@ -147,5 +148,5 @@ ipcMain.on('res-update', (event, version, proxyUrl) => {
 })
 
 ipcMain.handle('res-is-update', (_, proxyUrl: string) => {
-  isUpdate(proxyUrl)
+  return isUpdate(proxyUrl)
 })

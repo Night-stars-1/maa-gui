@@ -1,3 +1,6 @@
 provider: generic
-url: https://example.com/auto-updates
+url: http://127.0.0.1:3571/auto-updates
 updaterCacheDirName: mma-gui-updater
+# provider: github
+# owner: Night-stars-1
+# repo: maa-gui
