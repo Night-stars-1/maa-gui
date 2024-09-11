@@ -10,7 +10,6 @@ export const useDebug = defineStore('debug', () => {
   watch(
     () => isDebug.value,
     (isDebug) => {
-      console.log(isDebug)
       window.api.setDebug(isDebug)
       setDebug(isDebug)
     }

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 20:09:36
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 00:06:13
+ * @LastEditTime: 2024-09-11 14:35:09
 -->
 <script setup lang="ts">
 interface Item {
@@ -21,12 +21,12 @@ interface Item {
     }
   }
 }
+import { useShowImage } from '@stores/showImage'
+
+const { showImage } = useShowImage()
 const items = ref<Item[]>([])
 const scrollContainer = ref<ComponentPublicInstance | null>(null) // 滚动容器的引用
 const isAtBottom = ref(true) // 标记是否在底部
-
-const image = ref('')
-const isOpenImage = ref(false)
 
 window.api.onStartRecognize((_, name, next) => {
   const data: Item = {
@@ -71,9 +71,8 @@ function scrollToBottom() {
   }
 }
 
-async function showImage(recoId: number) {
+async function getImage(recoId: number) {
   const result = await window.api.queryRecognitionDetail(recoId)
-  isOpenImage.value = true
 
   // 将 ArrayBuffer 转换为 Base64 字符串
   const base64String = btoa(
@@ -82,7 +81,7 @@ async function showImage(recoId: number) {
 
   // 创建 data URL
   const url = `data:image/png;base64,${base64String}`
-  image.value = url
+  showImage(url)
 }
 </script>
 
@@ -112,7 +111,7 @@ async function showImage(recoId: number) {
             :color="`${data.status == 1 ? 'success' : data.status == 0 ? 'info' : 'error'}`"
             aria-label=""
             @click="() => {}"
-            @dblclick="showImage(data.id)"
+            @dblclick="getImage(data.id)"
           >
             {{ name }}
           </v-chip>
@@ -120,9 +119,6 @@ async function showImage(recoId: number) {
       </v-card>
     </v-timeline-item>
   </v-timeline>
-  <v-dialog v-model="isOpenImage">
-    <v-img class="bg-white" :src="image" cover></v-img>
-  </v-dialog>
 </template>
 
 <style scoped>
