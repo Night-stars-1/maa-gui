@@ -1,6 +1,6 @@
 {
   "name": "m5a-gui",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
   "author": "example.com",
