@@ -44,6 +44,5 @@ appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: github
-  owner: Night-stars-1
-  repo: maa-gui
+  provider: generic
+  url: https://example.com/auto-updates
