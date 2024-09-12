@@ -16,7 +16,7 @@ const api = {
   deviceLoad: (device: AdbInfo) => ipcRenderer.invoke('maa-device-load', device),
   log: (callback: (event: Electron.IpcRendererEvent, message: string) => void) =>
     ipcRenderer.on('log-message', callback),
-  upDate: (version: string, proxyUrl: string) => ipcRenderer.send('res-update', version, proxyUrl),
+  update: (version: string, proxyUrl: string) => ipcRenderer.send('res-update', version, proxyUrl),
   isUpdate: (proxyUrl: string) => ipcRenderer.invoke('res-is-update', proxyUrl),
   getInterface: () => ipcRenderer.invoke('maa-get-interface'),
   onStartRecognize: (
@@ -28,7 +28,8 @@ const api = {
   queryRecognitionDetail: (recoId: number) =>
     ipcRenderer.invoke('maa-query-recognition-detail', recoId),
   setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug),
-  openExternal: (url: string) => shell.openExternal(url)
+  openExternal: (url: string) => shell.openExternal(url),
+  guiUpdate: (proxyUrl: string) => ipcRenderer.send('maa-gui-update', proxyUrl)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

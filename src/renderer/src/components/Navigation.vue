@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-12 01:29:01
+ * @LastEditTime: 2024-09-12 21:38:10
 -->
 <script setup lang="ts">
 import { debounce } from 'lodash'
@@ -40,17 +40,21 @@ window.electron.ipcRenderer.on('res-download', (_, message) => {
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function update(event: any) {
+async function update(event: any, type: string) {
   event.target?.closest('.v-list-item')?.classList?.remove('v-list-item--active')
-  updateTitle.value = '检测更新中...'
-  const version = await window.api.isUpdate(proxy.value)
-  if (typeof version === 'string') {
-    updateTitle.value = '下载资源包中...'
-    updateProgress.value = '0'
-    updating.value = true
-    window.api.upDate(version, proxy.value)
+  if (type == 'res') {
+    updateTitle.value = '检测更新中...'
+    const version = await window.api.isUpdate(proxy.value)
+    if (typeof version === 'string') {
+      updateTitle.value = '下载资源包中...'
+      updateProgress.value = '0'
+      updating.value = true
+      window.api.update(version, proxy.value)
+    } else {
+      createToast('已是最新版本')
+    }
   } else {
-    createToast('已是最新版本')
+    window.api.guiUpdate(proxy.value)
   }
 }
 const debouncedUpdate = debounce(update, 200)
@@ -90,9 +94,15 @@ const debouncedUpdate = debounce(update, 200)
       <v-spacer />
       <v-list-item
         prepend-icon="mdi-update"
+        title="检查资源包"
+        value="检查资源包"
+        @click="(event: MouseEvent | KeyboardEvent) => debouncedUpdate(event, 'res')"
+      ></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-update"
         title="检查更新"
         value="检查更新"
-        @click="debouncedUpdate"
+        @click="(event: MouseEvent | KeyboardEvent) => debouncedUpdate(event, 'gui')"
       ></v-list-item>
       <v-list-item prepend-icon="mdi-cog" title="设置" value="设置" to="/setting"></v-list-item>
       <v-list-item

@@ -27,7 +27,7 @@ interface API {
   log: (
     callback: (event: Electron.IpcRendererEvent, message: string) => void
   ) => Electron.IpcRenderer
-  upDate: (version: string, proxyUrl: string) => void
+  update: (version: string, proxyUrl: string) => void
   isUpdate: (proxyUrl: string) => Promise<string | boolean>
   getInterface: () => Promise<string>
   onStartRecognize: (
@@ -47,4 +47,5 @@ interface API {
   }>
   setDebug: (isDebug: boolean) => void
   openExternal: (url: string) => Promise<void>
+  guiUpdate: (proxyUrl: string) => void
 }

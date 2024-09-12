@@ -2,11 +2,18 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-12 00:11:49
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-12 01:06:13
+ * @LastEditTime: 2024-09-12 21:40:53
  */
 import { autoUpdater } from 'electron-updater'
 import { app, dialog } from 'electron'
 import path from 'path'
+
+function checkUpdate(proxyUrl: string) {
+  autoUpdater.requestHeaders = {
+    proxyUrl
+  }
+  autoUpdater.checkForUpdates()
+}
 
 export default () => {
   if (import.meta.env.DEV) {
@@ -18,10 +25,7 @@ export default () => {
     autoUpdater.updateConfigPath = path.join(__dirname, '../../dev-app-update.yml')
     // autoUpdater.checkForUpdatesAndNotify()
   }
-  autoUpdater.requestHeaders = {
-    elearch: process.arch
-  }
-  autoUpdater.checkForUpdates()
+
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.on('checking-for-update', () => {
@@ -72,3 +76,5 @@ export default () => {
     console.log(JSON.stringify(progressObj))
   })
 }
+
+export { checkUpdate }
