@@ -1,5 +1,5 @@
 provider: generic
-url: http://127.0.0.1:3571/auto-updates
+url: https://goda.srap.link/auto-updates
 updaterCacheDirName: mma-gui-updater
 # provider: github
 # owner: Night-stars-1
