@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-11 16:58:20
+ * @LastEditTime: 2024-09-13 11:55:06
  */
 import { contextBridge, ipcRenderer, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
@@ -29,7 +29,9 @@ const api = {
     ipcRenderer.invoke('maa-query-recognition-detail', recoId),
   setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug),
   openExternal: (url: string) => shell.openExternal(url),
-  guiUpdate: (proxyUrl: string) => ipcRenderer.send('maa-gui-update', proxyUrl)
+  guiUpdate: (proxyUrl: string) => ipcRenderer.send('maa-gui-update', proxyUrl),
+  guiInstall: () => ipcRenderer.send('maa-gui-install'),
+  guiDownload: () => ipcRenderer.send('maa-gui-download')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

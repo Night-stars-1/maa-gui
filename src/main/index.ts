@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:31
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-12 21:34:19
+ * @LastEditTime: 2024-09-13 13:30:16
  */
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
@@ -27,6 +27,7 @@ function createWindow(): void {
   })
 
   mma(mainWindow)
+  autoUpdater(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -65,7 +66,7 @@ app.whenReady().then(() => {
   ipcMain.on('maa-gui-update', (_, proxyUrl: string) => checkUpdate(proxyUrl))
 
   createWindow()
-  autoUpdater()
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -79,7 +80,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   stop()
   if (process.platform !== 'darwin') {
-    app.quit()
+    // app.quit()
   }
 })
 

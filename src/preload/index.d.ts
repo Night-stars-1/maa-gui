@@ -48,4 +48,6 @@ interface API {
   setDebug: (isDebug: boolean) => void
   openExternal: (url: string) => Promise<void>
   guiUpdate: (proxyUrl: string) => void
+  guiInstall: () => void
+  guiDownload: () => void
 }

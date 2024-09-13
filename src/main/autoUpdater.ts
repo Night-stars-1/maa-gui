@@ -2,10 +2,10 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-12 00:11:49
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-12 21:40:53
+ * @LastEditTime: 2024-09-13 13:03:47
  */
 import { autoUpdater } from 'electron-updater'
-import { app, dialog } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 
 function checkUpdate(proxyUrl: string) {
@@ -15,7 +15,7 @@ function checkUpdate(proxyUrl: string) {
   autoUpdater.checkForUpdates()
 }
 
-export default () => {
+export default (window: BrowserWindow) => {
   if (import.meta.env.DEV) {
     Object.defineProperty(app, 'isPackaged', {
       get() {
@@ -23,7 +23,7 @@ export default () => {
       }
     })
     autoUpdater.updateConfigPath = path.join(__dirname, '../../dev-app-update.yml')
-    // autoUpdater.checkForUpdatesAndNotify()
+    autoUpdater.checkForUpdates()
   }
 
   autoUpdater.autoDownload = false
@@ -34,19 +34,11 @@ export default () => {
 
   autoUpdater.on('update-available', (info) => {
     // 当有新版本可用时，弹窗提示用户
-    dialog
-      .showMessageBox({
-        type: 'info',
-        title: '新版本可用',
-        message: '有一个可用的新版本，要更新吗',
-        buttons: ['是', '否']
-      })
-      .then((result) => {
-        if (result.response === 0) {
-          // 用户选择更新，触发下载和安装
-          autoUpdater.downloadUpdate()
-        }
-      })
+    window.webContents.send('maa-gui-update', info['body'])
+  })
+
+  ipcMain.on('maa-gui-download', () => {
+    autoUpdater.downloadUpdate()
   })
 
   autoUpdater.on('update-not-available', (info) => {
@@ -60,20 +52,15 @@ export default () => {
 
   autoUpdater.on('update-downloaded', () => {
     // 处理下载完成的情况
-    dialog
-      .showMessageBox({
-        type: 'info',
-        title: '更新下载完成',
-        message: '点击确定重启获取最新内容',
-        buttons: ['确定']
-      })
-      .then(() => {
-        // 调用 quitAndInstall 来安装更新
-        autoUpdater.quitAndInstall()
-      })
+    window.webContents.send('maa-gui-downloaded')
   })
+
+  ipcMain.on('maa-gui-install', () => {
+    autoUpdater.quitAndInstall()
+  })
+
   autoUpdater.on('download-progress', (progressObj) => {
-    console.log(JSON.stringify(progressObj))
+    window.webContents.send('maa-gui-downloading', progressObj.percent)
   })
 }
 
