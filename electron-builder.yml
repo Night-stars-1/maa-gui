@@ -19,13 +19,15 @@ asar: true
 win:
   target:
     - target: nsis
-  requestedExecutionLevel: requireAdministrator
 nsis:
-  oneClick: true
+  oneClick: false
+  perMachine: true
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
