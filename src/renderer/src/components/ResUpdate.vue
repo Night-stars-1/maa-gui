@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-13 11:13:39
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 11:32:55
+ * @LastEditTime: 2024-09-13 18:47:28
 -->
 <script setup lang="ts">
 import { useProxyList } from '@stores/proxyList'
@@ -12,6 +12,7 @@ import { debounce } from 'lodash'
 const { proxy } = storeToRefs(useProxyList())
 const { createToast } = useSnackbar()
 
+const isUpdate = ref(false)
 const updateProgress = ref('0')
 const updateTitle = ref('检测更新中...')
 
@@ -23,7 +24,10 @@ window.electron.ipcRenderer.on('extract-progress', (_, progress) => {
 
 window.electron.ipcRenderer.on('extract-complete', (_, message) => {
   createToast(message)
-  setTimeout(() => (updateProgress.value = '0'), 100)
+  setTimeout(() => {
+    updateProgress.value = '0'
+    isUpdate.value = false
+  }, 100)
 })
 
 window.electron.ipcRenderer.on('extract-error', (_, errorMessage) => {
@@ -49,18 +53,29 @@ async function update(event: any) {
     window.api.update(version, proxy.value)
   } else {
     createToast('已是最新版本')
+    isUpdate.value = false
   }
 }
 const debouncedUpdate = debounce(update, 200)
+
+onBeforeMount(async () => {
+  const version = await window.api.isUpdate(proxy.value)
+  if (typeof version === 'string') {
+    isUpdate.value = true
+  }
+})
 </script>
 
 <template>
-  <v-list-item
-    prepend-icon="mdi-update"
-    title="检查资源包"
-    value="检查资源包"
-    @click="debouncedUpdate"
-  ></v-list-item>
+  <v-badge v-model="isUpdate" color="error" dot>
+    <v-list-item
+      prepend-icon="mdi-update"
+      title="检查资源包"
+      value="检查资源包"
+      @click="debouncedUpdate"
+    >
+    </v-list-item>
+  </v-badge>
   <v-dialog v-model="updating" width="auto" persistent>
     <v-card class="d-flex px-4 pb-8 mx-auto" width="400">
       <v-card-item class="px-0" prepend-icon="mdi-update" :title="updateTitle"> </v-card-item>

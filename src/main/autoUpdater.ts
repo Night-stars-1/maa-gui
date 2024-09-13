@@ -23,7 +23,7 @@ export default (window: BrowserWindow) => {
       }
     })
     autoUpdater.updateConfigPath = path.join(__dirname, '../../dev-app-update.yml')
-    autoUpdater.checkForUpdates()
+    // autoUpdater.checkForUpdates()
   }
 
   autoUpdater.autoDownload = false

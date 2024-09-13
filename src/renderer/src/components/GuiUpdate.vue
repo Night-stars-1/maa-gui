@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-13 11:13:39
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 12:14:51
+ * @LastEditTime: 2024-09-13 18:50:09
 -->
 <script setup lang="ts">
 import { useProxyList } from '@stores/proxyList'
@@ -10,6 +10,7 @@ import { debounce } from 'lodash'
 
 const { proxy } = storeToRefs(useProxyList())
 
+const isUpdate = ref(false)
 const updateProgress = ref(0)
 const updateTitle = ref('下载中...')
 const updating = computed(() => updateProgress.value > 0)
@@ -56,8 +57,10 @@ function confirm() {
   switch (confirmType.value) {
     case 1:
       window.api.guiDownload()
+      break
     case 2:
       setTimeout(window.api.guiInstall, 500)
+      break
   }
   confirmType.value = 0
   confirming.value = false
@@ -67,12 +70,15 @@ const debouncedUpdate = debounce(update, 200)
 </script>
 
 <template>
-  <v-list-item
-    prepend-icon="mdi-update"
-    title="检查更新"
-    value="检查更新"
-    @click="debouncedUpdate"
-  ></v-list-item>
+  <v-badge v-model="isUpdate" color="error" dot>
+    <v-list-item
+      prepend-icon="mdi-update"
+      title="检查更新"
+      value="检查更新"
+      @click="debouncedUpdate"
+    >
+    </v-list-item>
+  </v-badge>
   <v-dialog v-model="updating" width="auto" persistent>
     <v-card class="d-flex px-4 pb-8 mx-auto" width="400">
       <v-card-item class="px-0" prepend-icon="mdi-update" :title="updateTitle"> </v-card-item>
