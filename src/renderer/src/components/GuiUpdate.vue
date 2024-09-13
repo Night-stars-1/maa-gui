@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-13 11:13:39
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 18:50:09
+ * @LastEditTime: 2024-09-13 20:47:43
 -->
 <script setup lang="ts">
 import { useProxyList } from '@stores/proxyList'
@@ -26,7 +26,7 @@ const confirmText = ref('')
 const confirmType = ref(0)
 
 window.electron.ipcRenderer.on('maa-gui-update', (_, upInfo: string) => {
-  confirming.value = true
+  // confirming.value = true
   confirmTitle.value = '更新确认'
   confirmText.value = upInfo.replaceAll('\n', '<br />')
   confirmType.value = 1
@@ -40,7 +40,7 @@ window.electron.ipcRenderer.on('maa-gui-downloading', (_, progress: number) => {
 })
 
 window.electron.ipcRenderer.on('maa-gui-downloaded', () => {
-  confirming.value = true
+  // confirming.value = true
   confirmTitle.value = '下载确认'
   confirmText.value = '更新包下载完成,是否立即更新?'
   confirmType.value = 2
@@ -50,8 +50,10 @@ window.electron.ipcRenderer.on('maa-gui-downloaded', () => {
 async function update(event: any) {
   event.target?.closest('.v-list-item')?.classList?.remove('v-list-item--active')
   updateProgress.value = 0
-  window.api.guiUpdate(proxy.value)
+  const isUpdate = await window.api.isGuiUpdate(proxy.value)
+  confirming.value = isUpdate
 }
+const debouncedUpdate = debounce(update, 200)
 
 function confirm() {
   switch (confirmType.value) {
@@ -66,7 +68,9 @@ function confirm() {
   confirming.value = false
 }
 
-const debouncedUpdate = debounce(update, 200)
+onBeforeMount(async () => {
+  isUpdate.value = await window.api.isGuiUpdate(proxy.value)
+})
 </script>
 
 <template>

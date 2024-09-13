@@ -28,7 +28,7 @@ interface API {
     callback: (event: Electron.IpcRendererEvent, message: string) => void
   ) => Electron.IpcRenderer
   update: (version: string, proxyUrl: string) => void
-  isUpdate: (proxyUrl: string) => Promise<string | boolean>
+  isResUpdate: (proxyUrl: string) => Promise<string | boolean>
   getInterface: () => Promise<string>
   onStartRecognize: (
     callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
@@ -47,7 +47,7 @@ interface API {
   }>
   setDebug: (isDebug: boolean) => void
   openExternal: (url: string) => Promise<void>
-  guiUpdate: (proxyUrl: string) => void
+  isGuiUpdate: (proxyUrl: string) => Promise<boolean>
   guiInstall: () => void
   guiDownload: () => void
   openPath: (path: string) => Promise<string>

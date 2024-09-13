@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-09-10 12:43:43
  */
 interface ImportMetaEnv {
+  readonly VITE_VERSION: string
   readonly VITE_MAIN_VERSION: string
   readonly VITE_MAIN_RESOURCES: string
   readonly VITE_MAIN_UNRES_TARGET_DIR: string

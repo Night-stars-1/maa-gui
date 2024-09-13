@@ -17,7 +17,7 @@ const api = {
   log: (callback: (event: Electron.IpcRendererEvent, message: string) => void) =>
     ipcRenderer.on('log-message', callback),
   update: (version: string, proxyUrl: string) => ipcRenderer.send('res-update', version, proxyUrl),
-  isUpdate: (proxyUrl: string) => ipcRenderer.invoke('res-is-update', proxyUrl),
+  isResUpdate: (proxyUrl: string) => ipcRenderer.invoke('res-is-update', proxyUrl),
   getInterface: () => ipcRenderer.invoke('maa-get-interface'),
   onStartRecognize: (
     callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
@@ -29,7 +29,7 @@ const api = {
     ipcRenderer.invoke('maa-query-recognition-detail', recoId),
   setDebug: (isDebug: boolean) => ipcRenderer.send('maa-debug', isDebug),
   openExternal: (url: string) => shell.openExternal(url),
-  guiUpdate: (proxyUrl: string) => ipcRenderer.send('maa-gui-update', proxyUrl),
+  isGuiUpdate: (proxyUrl: string) => ipcRenderer.invoke('maa-gui-update', proxyUrl),
   guiInstall: () => ipcRenderer.send('maa-gui-install'),
   guiDownload: () => ipcRenderer.send('maa-gui-download'),
   openPath: (path: string) => shell.openPath(path),

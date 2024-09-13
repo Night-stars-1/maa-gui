@@ -47,7 +47,7 @@ async function update(event: any) {
   event.target?.closest('.v-list-item')?.classList?.remove('v-list-item--active')
   updateProgress.value = '0'
   updateTitle.value = '检测更新中...'
-  const version = await window.api.isUpdate(proxy.value)
+  const version = await window.api.isResUpdate(proxy.value)
   if (typeof version === 'string') {
     updateTitle.value = '下载资源包中...'
     window.api.update(version, proxy.value)
@@ -59,7 +59,7 @@ async function update(event: any) {
 const debouncedUpdate = debounce(update, 200)
 
 onBeforeMount(async () => {
-  const version = await window.api.isUpdate(proxy.value)
+  const version = await window.api.isResUpdate(proxy.value)
   if (typeof version === 'string') {
     isUpdate.value = true
   }

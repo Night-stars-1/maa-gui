@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 11:31:36
+ * @LastEditTime: 2024-09-13 20:58:01
 -->
 <script setup lang="ts">
 import { useDebug } from '@stores/debug'
@@ -64,5 +64,11 @@ const { isDebug } = storeToRefs(useDebug())
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+</style>
+
+<style lang="scss">
+.navigation .v-list-item__prepend .v-list-item__spacer {
+  width: 25px;
 }
 </style>
