@@ -2,10 +2,10 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 17:06:15
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 13:13:26
+ * @LastEditTime: 2024-09-13 17:55:41
  */
 import path, { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin, loadEnv } from 'electron-vite'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -25,8 +25,6 @@ function setVersion() {
   writeFileSync(envPath, envContent, 'utf-8')
 }
 
-const env = loadEnv('production')
-
 function configureOcrModel() {
   const ocrAssetsDir = path.join('resources', 'MaaCommonAssets', 'OCR')
 
@@ -36,7 +34,7 @@ function configureOcrModel() {
     process.exit(1) // 退出程序
   }
 
-  const ocrDir = path.join(env.VITE_MAIN_UNRES_OUT_DIR, 'model', 'ocr')
+  const ocrDir = path.join(__dirname, 'resources', 'model', 'ocr')
 
   // 仅当 OCR 目录不存在时，复制默认的 OCR 模型
   if (!existsSync(ocrDir)) {

@@ -10,8 +10,8 @@ files:
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,res.zip}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
 extraResources:
-  - from: 'resources/resource_picli'
-    to: 'resource_picli'
+  - from: 'resources/model'
+    to: 'model'
 asar: true
 # asarUnpack:
 #   - resources/**

@@ -13,6 +13,11 @@ const router = useRouter()
 
 const data = asyncComputed<Interface>(async () => JSON.parse(await window.api.getInterface()))
 
+window.electron.ipcRenderer.on('maa-res-update', async () => {
+  console.log(11111)
+  data.value = JSON.parse(await window.api.getInterface())
+})
+
 const useselectData = useSelectData()
 const { selectData } = storeToRefs(useselectData)
 function setSelectData(task: Task) {

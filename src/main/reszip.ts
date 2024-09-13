@@ -3,14 +3,18 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-12 00:55:27
+ * @LastEditTime: 2024-09-13 17:47:58
  */
 import fs from 'fs'
 import path from 'path'
 import axios from 'axios'
 import unzipper from 'unzipper'
-import { ipcMain, IpcMainEvent } from 'electron'
-import { upRes } from './maa'
+import { app, ipcMain, IpcMainEvent, shell } from 'electron'
+import { upResources } from './maa'
+
+const BASE_RES_PATH = path.join(app.getPath('userData'), import.meta.env.VITE_MAIN_UNRES_OUT_DIR)
+const VERSION_PATH = path.join(BASE_RES_PATH, 'version.txt')
+const INTERFACE_PATH = path.join(BASE_RES_PATH, 'interface.json')
 
 async function isUpdate(proxyUrl: string) {
   let version = '0'
@@ -18,9 +22,7 @@ async function isUpdate(proxyUrl: string) {
     if (!import.meta.env.VITE_MAIN_VERSION) return version
     const response = await axios.get<number>(proxyUrl + import.meta.env.VITE_MAIN_VERSION)
     version = response.data.toString()
-    const localVersion = fs
-      .readFileSync(`${import.meta.env.VITE_MAIN_UNRES_OUT_DIR}/version.txt`, 'utf-8')
-      .trim()
+    const localVersion = fs.readFileSync(VERSION_PATH, 'utf-8').trim()
     return version !== localVersion ? version : false
   } catch (error: any) {
     console.error(error)
@@ -43,38 +45,26 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
     fs.writeFileSync('res.zip', response.data)
     console.log('资源包下载成功')
     event.sender.send('res-download', `资源包下载完成`)
-    extractZip(
-      'res.zip',
-      import.meta.env.VITE_MAIN_UNRES_TARGET_DIR,
-      import.meta.env.VITE_MAIN_UNRES_OUT_DIR,
-      version,
-      event
-    )
+    extractZip('res.zip', import.meta.env.VITE_MAIN_UNRES_TARGET_DIR, version, event)
   } catch (error: any) {
     console.error('下载资源包时发生错误:', error.message)
   }
 }
 
-function extractZip(
-  zipPath: string,
-  targetDir: string,
-  outputDir: string,
-  version: string,
-  event: IpcMainEvent
-) {
+function extractZip(zipPath: string, targetDir: string, version: string, event: IpcMainEvent) {
   let totalFiles = 0
   let extractedFiles = 0
 
-  fs.mkdirSync(outputDir, { recursive: true })
+  fs.mkdirSync(BASE_RES_PATH, { recursive: true })
   try {
-    fs.rmSync(path.join(outputDir, 'image'), { recursive: true, force: true })
-    console.log(`文件夹 ${path.join(outputDir, 'image')} 删除成功`)
+    fs.rmSync(path.join(BASE_RES_PATH, 'image'), { recursive: true, force: true })
+    console.log(`文件夹 ${path.join(BASE_RES_PATH, 'image')} 删除成功`)
   } catch (err) {
     console.error(`删除文件夹时出错: ${err}`)
   }
   try {
-    fs.rmSync(path.join(outputDir, 'pipeline'), { recursive: true, force: true })
-    console.log(`文件夹 ${path.join(outputDir, 'pipeline')} 删除成功`)
+    fs.rmSync(path.join(BASE_RES_PATH, 'pipeline'), { recursive: true, force: true })
+    console.log(`文件夹 ${path.join(BASE_RES_PATH, 'pipeline')} 删除成功`)
   } catch (err) {
     console.error(`删除文件夹时出错: ${err}`)
   }
@@ -95,16 +85,14 @@ function extractZip(
         .on('entry', (entry) => {
           // 只处理位于目标文件夹的文件
           if (entry.path === import.meta.env.VITE_MAIN_UNRES_INTERFACE) {
-            entry
-              .pipe(fs.createWriteStream(path.join(outputDir, 'interface.json')))
-              .on('finish', () => {
-                extractedFiles++
-                const progress = (extractedFiles / totalFiles) * 100
-                event.sender.send('extract-progress', progress.toFixed(2))
-              })
+            entry.pipe(fs.createWriteStream(INTERFACE_PATH)).on('finish', () => {
+              extractedFiles++
+              const progress = (extractedFiles / totalFiles) * 100
+              event.sender.send('extract-progress', progress.toFixed(2))
+            })
           } else if (entry.path.startsWith(targetDir)) {
             const relativePath = entry.path.replace(targetDir, '') // 去除目标文件夹前缀，使其解压到outputDir的根目录
-            const filePath = path.join(outputDir, relativePath)
+            const filePath = path.join(BASE_RES_PATH, relativePath)
 
             // 目录时自动创建目录
             if (entry.type === 'Directory') {
@@ -128,8 +116,8 @@ function extractZip(
         })
         .on('close', () => {
           if (extractedFiles) {
-            fs.writeFileSync(`${outputDir}/version.txt`, version)
-            upRes()
+            fs.writeFileSync(VERSION_PATH, version)
+            upResources()
           }
           event.sender.send('extract-complete', `解压完成，共解压 ${extractedFiles} 个文件`)
         })
@@ -142,6 +130,20 @@ function extractZip(
     })
 }
 
+function copyOcrModel() {
+  fs.cp(
+    path.join(__dirname, '..', '..', 'resources', 'model'),
+    path.join(BASE_RES_PATH, 'model'),
+    { recursive: true },
+    (err) => {
+      if (err) {
+        console.error('复制文件夹时出错:', err)
+      }
+    }
+  )
+}
+copyOcrModel()
+
 // 监听渲染进程的请求，执行解压任务
 ipcMain.on('res-update', (event, version, proxyUrl) => {
   update(version, proxyUrl, event)
@@ -150,3 +152,9 @@ ipcMain.on('res-update', (event, version, proxyUrl) => {
 ipcMain.handle('res-is-update', (_, proxyUrl: string) => {
   return isUpdate(proxyUrl)
 })
+
+ipcMain.on('res-open-folder', () => {
+  shell.openPath(BASE_RES_PATH)
+})
+
+export { BASE_RES_PATH, INTERFACE_PATH }

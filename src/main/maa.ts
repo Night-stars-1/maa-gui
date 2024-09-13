@@ -2,17 +2,19 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-11 00:25:10
+ * @LastEditTime: 2024-09-13 17:54:23
  */
 import fs from 'fs'
+import path from 'path'
 import maa from '@nekosu/maa-node'
 import { BrowserWindow, ipcMain } from 'electron'
 import { registerCustom, customParam } from './customMaa'
 import logger, { log } from './utils/logger'
 import { handleDebug } from './customMaa/debugType'
+import { BASE_RES_PATH, INTERFACE_PATH } from './reszip'
 
 maa.set_global_option('DebugMessage', true)
-maa.set_global_option('LogDir', './logs')
+maa.set_global_option('LogDir', path.join(BASE_RES_PATH, 'logs'))
 
 let inst: maa.Instance
 let win: BrowserWindow
@@ -48,8 +50,9 @@ async function init(device: maa.AdbInfo) {
     log(`${msg} ${detail}`)
     console.log(msg, detail)
   }
+
   // 加载资源
-  await res.post_path('./resources/resource_picli/base')
+  await upResources()
 
   // 创建实例
   inst = new maa.Instance()
@@ -68,8 +71,9 @@ async function init(device: maa.AdbInfo) {
   return inst.inited
 }
 
-async function upRes() {
-  res && (await res.post_path('./resources/resource_picli/base'))
+async function upResources() {
+  res && (await res.post_path(BASE_RES_PATH))
+  win && win.webContents.send('maa-res-update')
 }
 
 async function start(task: Task[]) {
@@ -93,7 +97,7 @@ async function stop() {
 }
 
 function getInterface() {
-  const data = fs.readFileSync('./resources/resource_picli/base/interface.json', {
+  const data = fs.readFileSync(INTERFACE_PATH, {
     encoding: 'utf-8'
   })
   return data
@@ -148,4 +152,4 @@ export default (_win: BrowserWindow) => {
   logger(win)
 }
 
-export { upRes, stop }
+export { upResources, stop }

@@ -50,4 +50,6 @@ interface API {
   guiUpdate: (proxyUrl: string) => void
   guiInstall: () => void
   guiDownload: () => void
+  openPath: (path: string) => Promise<string>
+  openResFolder: () => void
 }

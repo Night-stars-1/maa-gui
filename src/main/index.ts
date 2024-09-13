@@ -2,14 +2,13 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:31
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 13:30:16
+ * @LastEditTime: 2024-09-13 16:43:22
  */
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import mma, { stop } from './maa'
-import './reszip'
 import autoUpdater, { checkUpdate } from './autoUpdater'
 
 function createWindow(): void {
@@ -80,7 +79,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   stop()
   if (process.platform !== 'darwin') {
-    // app.quit()
+    app.quit()
   }
 })
 

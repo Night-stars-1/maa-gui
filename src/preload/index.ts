@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 11:55:06
+ * @LastEditTime: 2024-09-13 17:25:00
  */
 import { contextBridge, ipcRenderer, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
@@ -31,7 +31,9 @@ const api = {
   openExternal: (url: string) => shell.openExternal(url),
   guiUpdate: (proxyUrl: string) => ipcRenderer.send('maa-gui-update', proxyUrl),
   guiInstall: () => ipcRenderer.send('maa-gui-install'),
-  guiDownload: () => ipcRenderer.send('maa-gui-download')
+  guiDownload: () => ipcRenderer.send('maa-gui-download'),
+  openPath: (path: string) => shell.openPath(path),
+  openResFolder: () => ipcRenderer.send('res-open-folder')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
