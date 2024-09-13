@@ -132,7 +132,7 @@ function extractZip(zipPath: string, targetDir: string, version: string, event: 
 
 function copyOcrModel() {
   fs.cp(
-    path.join(__dirname, '..', '..', 'resources', 'model'),
+    path.join('resources', 'model'),
     path.join(BASE_RES_PATH, 'model'),
     { recursive: true },
     (err) => {
