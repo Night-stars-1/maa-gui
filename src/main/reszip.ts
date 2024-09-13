@@ -42,10 +42,15 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
       }
     })
     // 将文件写入指定路径
-    fs.writeFileSync('res.zip', response.data)
+    fs.writeFileSync(path.join(BASE_RES_PATH, 'res.zip'), response.data)
     console.log('资源包下载成功')
     event.sender.send('res-download', `资源包下载完成`)
-    extractZip('res.zip', import.meta.env.VITE_MAIN_UNRES_TARGET_DIR, version, event)
+    extractZip(
+      path.join(BASE_RES_PATH, 'res.zip'),
+      import.meta.env.VITE_MAIN_UNRES_TARGET_DIR,
+      version,
+      event
+    )
   } catch (error: any) {
     console.error('下载资源包时发生错误:', error.message)
   }
