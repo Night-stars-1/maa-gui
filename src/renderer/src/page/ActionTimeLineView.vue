@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 20:09:36
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-11 14:35:09
+ * @LastEditTime: 2024-09-15 16:28:50
 -->
 <script setup lang="ts">
 interface Item {
@@ -10,12 +10,12 @@ interface Item {
   icon: string
   name: string
   next: {
-    /**
-     * 0-未返回结果
-     * 1-成功
-     * 2-失败
-     */
     [key: string]: {
+      /**
+       * 0-未返回结果
+       * 1-成功
+       * 2-失败
+       */
       status: number
       id: number
     }
@@ -56,7 +56,7 @@ window.api.onEndRecognize((_, id, name, status) => {
   const data = items.value[items.value.length - 1].next[name]
   data.status = status ? 1 : 2
   data.id = id
-  // console.log(id, message, status)
+  console.log(id, name, status)
 })
 
 function onScroll() {

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-10 00:05:20
+ * @LastEditTime: 2024-09-14 21:34:31
 -->
 <script setup lang="ts">
 import { useSelectData } from '@stores/selectData'
@@ -14,7 +14,6 @@ const router = useRouter()
 const data = asyncComputed<Interface>(async () => JSON.parse(await window.api.getInterface()))
 
 window.electron.ipcRenderer.on('maa-res-update', async () => {
-  console.log(11111)
   data.value = JSON.parse(await window.api.getInterface())
 })
 

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:40:19
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 12:34:14
+ * @LastEditTime: 2024-09-14 10:12:52
  */
 import { createMemoryHistory, createRouter, RouteRecordRaw } from 'vue-router'
 import HomeView from '@renderer/page/HomeView.vue'
@@ -13,6 +13,8 @@ import TaskListView from '@renderer/page/TaskListView.vue'
 import ActionTimeLineView from '@renderer/page/ActionTimeLineView.vue'
 import AboutView from '@renderer/page/AboutView.vue'
 import SettingView from '@renderer/page/SettingView.vue'
+import { title } from 'process'
+import MakePipelineView from '@renderer/page/MakePipelineView.vue'
 
 const defaultTitle = document.title
 
@@ -72,6 +74,13 @@ const routes: RouteRecordRaw[] = [
       title: '设置'
     },
     component: SettingView
+  },
+  {
+    path: '/make-pipeline',
+    meta: {
+      title: '流水线编辑器'
+    },
+    component: MakePipelineView
   }
 ]
 

@@ -14,5 +14,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TaskListCard: typeof import('./../components/TaskListCard.vue')['default']
     TaskSetting: typeof import('./../components/TaskSetting.vue')['default']
+    TemplateMatch: typeof import('./../components/pipeline/recognition/TemplateMatch.vue')['default']
   }
 }

@@ -2,11 +2,11 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 17:25:00
+ * @LastEditTime: 2024-09-14 22:30:32
  */
 import { contextBridge, ipcRenderer, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { AdbInfo } from '@nekosu/maa-node'
+import { AdbInfo } from './types/maa'
 
 // Custom APIs for renderer
 const api = {

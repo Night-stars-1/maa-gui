@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:35:44
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 20:58:01
+ * @LastEditTime: 2024-09-14 10:14:30
 -->
 <script setup lang="ts">
 import { useDebug } from '@stores/debug'
@@ -41,6 +41,13 @@ const { isDebug } = storeToRefs(useDebug())
         to="/timeline"
       ></v-list-item>
       <v-list-item prepend-icon="mdi-math-log" title="日志" value="日志" to="/log"></v-list-item>
+      <v-list-item
+        v-if="isDebug"
+        prepend-icon="mdi-timeline-clock-outline"
+        title="流水线编辑器"
+        value="流水线编辑器"
+        to="/make-pipeline"
+      ></v-list-item>
       <v-spacer />
       <ResUpdate />
       <GuiUpdate />
