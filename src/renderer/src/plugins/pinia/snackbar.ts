@@ -8,5 +8,8 @@ export const useSnackbar = defineStore('snackbar', () => {
     snackbarMsg.value = msg
     snackbar.value = true
   }
+
+  window.electron.ipcRenderer.on('main-create-toast', (_, msg: string) => createToast(msg))
+
   return { snackbar, snackbarMsg, createToast }
 })

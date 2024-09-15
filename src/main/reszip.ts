@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 17:47:58
+ * @LastEditTime: 2024-09-15 16:52:41
  */
 import fs from 'fs'
 import path from 'path'
@@ -11,6 +11,7 @@ import axios from 'axios'
 import unzipper from 'unzipper'
 import { app, ipcMain, IpcMainEvent, shell } from 'electron'
 import { upResources } from './maa'
+import { createToast } from './utils/toast'
 
 const BASE_RES_PATH = path.join(app.getPath('userData'), import.meta.env.VITE_MAIN_UNRES_OUT_DIR)
 const VERSION_PATH = path.join(BASE_RES_PATH, 'version.txt')
@@ -32,6 +33,7 @@ async function isUpdate(proxyUrl: string) {
 
 async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
   try {
+    createToast('准备下载资源包')
     // 发出 GET 请求，响应类型设置为 arraybuffer 以处理二进制文件
     const response = await axios.get(proxyUrl + import.meta.env.VITE_MAIN_RESOURCES, {
       responseType: 'arraybuffer',
@@ -52,7 +54,16 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
       event
     )
   } catch (error: any) {
+    console.log(error.code)
     console.error('下载资源包时发生错误:', error.message)
+    switch (error.code) {
+      case 'ENOTFOUND':
+        createToast(`网络异常，请设置代理`)
+        break
+      default:
+        createToast(`下载资源包时发生错误`)
+        break
+    }
   }
 }
 

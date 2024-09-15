@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:12:35
+ * @LastEditTime: 2024-09-15 16:47:47
  */
 import fs from 'fs'
 import path from 'path'
@@ -13,7 +13,7 @@ import logger, { log } from './utils/logger'
 import { handleDebug } from './customMaa/debugType'
 import { BASE_RES_PATH, INTERFACE_PATH } from './reszip'
 
-maa.Global.log_dir = './logs' // path.join(BASE_RES_PATH, 'logs')
+maa.Global.log_dir = path.join(BASE_RES_PATH, 'logs')
 maa.Global.debug_message = true
 
 let tskr: maa.Tasker
@@ -142,7 +142,7 @@ function queryRecognitionDetail(recoId: maa.api.RecoId) {
   // }
   const result = maa.api.tasker_get_recognition_detail(tskr.handle, recoId)
   if (result) {
-    return { info: {}, image: result[6] }
+    return { info: {}, image: result[6][0] }
   }
   return { info: {}, image: null }
 }
@@ -176,7 +176,6 @@ ipcMain.on('maa-debug', (_, isDebug: boolean) => {
 
 export default (_win: BrowserWindow) => {
   win = _win
-  logger(win)
 }
 
 export { upResources, stop }
