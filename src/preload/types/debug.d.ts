@@ -3,16 +3,17 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 20:00:36
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:27:02
+ * @LastEditTime: 2024-09-15 17:06:07
  */
 interface DetailListToRecognize {
   msg: 'Task.Debug.ListToRecognize'
   detail: {
     task_id: number
-    /** 事件名 */
+    /** 入口事件名 */
     entry: string
     uuid: string
     hash: string
+    /** 当前事件名 */
     current: string
     /** 该事件的next列表 */
     list: string[]

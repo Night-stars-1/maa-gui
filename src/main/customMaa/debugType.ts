@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 19:52:43
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:30:31
+ * @LastEditTime: 2024-09-15 17:05:54
  */
 import { log, sendEndRecognize, sendStartRecognize } from '../utils/logger'
 
@@ -10,7 +10,7 @@ function handleDebug(data: DebugData) {
   const type = data.msg
   switch (type) {
     case 'Task.Debug.ListToRecognize':
-      sendStartRecognize(data.detail.entry, data.detail.list)
+      sendStartRecognize(data.detail.current, data.detail.list)
       break
     case 'Task.Debug.MissAll':
       // console.log('------------------------------')

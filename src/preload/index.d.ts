@@ -29,7 +29,7 @@ interface API {
   onStartRecognize: (
     callback: (
       event: Electron.IpcRendererEvent,
-      name: DetailListToRecognize['detail']['entry'],
+      name: DetailListToRecognize['detail']['current'],
       next: DetailListToRecognize['detail']['list']
     ) => void
   ) => Electron.IpcRenderer
