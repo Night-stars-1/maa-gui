@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-13 11:13:39
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 20:47:43
+ * @LastEditTime: 2024-09-16 17:40:51
 -->
 <script setup lang="ts">
 import { useProxyList } from '@stores/proxyList'
@@ -40,7 +40,7 @@ window.electron.ipcRenderer.on('maa-gui-downloading', (_, progress: number) => {
 })
 
 window.electron.ipcRenderer.on('maa-gui-downloaded', () => {
-  // confirming.value = true
+  confirming.value = true
   confirmTitle.value = '下载确认'
   confirmText.value = '更新包下载完成,是否立即更新?'
   confirmType.value = 2

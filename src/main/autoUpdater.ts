@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-12 00:11:49
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-13 20:41:59
+ * @LastEditTime: 2024-09-16 17:38:14
  */
 import { autoUpdater } from 'electron-updater'
 import { app, BrowserWindow, ipcMain } from 'electron'
@@ -13,7 +13,7 @@ async function isGuiUpdate(proxyUrl: string) {
     proxyUrl
   }
   const result = await autoUpdater.checkForUpdates()
-  return result ? result?.updateInfo.version > import.meta.env.VITE_VERSION : false
+  return result ? result?.updateInfo.version !== import.meta.env.VITE_VERSION : false
 }
 
 ipcMain.handle('maa-gui-update', (_, proxyUrl: string) => isGuiUpdate(proxyUrl))
