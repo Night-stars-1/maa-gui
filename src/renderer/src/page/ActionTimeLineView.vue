@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 20:09:36
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:28:50
+ * @LastEditTime: 2024-09-16 17:24:26
 -->
 <script setup lang="ts">
 interface Item {
@@ -42,9 +42,9 @@ window.api.onStartRecognize((_, name, next) => {
         id: 0
       })
   )
-  if (items.value.length >= 100) {
-    items.value.shift() // 移除第一个元素
-  }
+  // if (items.value.length >= 100) {
+  //   items.value.shift() // 移除第一个元素
+  // }
   items.value.push(data)
   nextTick(() => {
     if (isAtBottom.value) {
@@ -56,7 +56,7 @@ window.api.onEndRecognize((_, id, name, status) => {
   const data = items.value[items.value.length - 1].next[name]
   data.status = status ? 1 : 2
   data.id = id
-  console.log(id, name, status)
+  // console.log(id, name, status)
 })
 
 function onScroll() {
@@ -86,6 +86,7 @@ async function getImage(recoId: number) {
 </script>
 
 <template>
+  <v-alert text="只有该页面只会显示正在运行中的流水线" type="warning" variant="tonal"></v-alert>
   <v-timeline
     ref="scrollContainer"
     class="scroll-container justify-start"
