@@ -73,7 +73,7 @@ async function loadDevice(device: any) {
         {{ device.name }}
         <br />
         <br />
-        {{ device.adb_serial }}
+        {{ device.address }}
       </v-card-text>
     </v-card>
     <v-btn v-if="!loading && devices?.length === 0" @click="getDevices">刷新</v-btn>

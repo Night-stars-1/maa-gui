@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-09 11:58:58
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-16 17:03:21
+ * @LastEditTime: 2024-09-16 17:20:30
 -->
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
@@ -58,12 +58,12 @@ function onAdd(event: any) {
         </template>
       </v-dialog>
     </v-card-title>
-    <v-list>
+    <v-list class="task-list">
       <VueDraggable
         v-model="model"
         :animation="150"
         group="people"
-        class="flex flex-col gap-2 p-4 w-300px m-auto bg-gray-500/5 rounded overflow-auto"
+        class="task-list"
         @add="onAdd"
         @update="$emit('update', model)"
       >
@@ -110,3 +110,9 @@ function onAdd(event: any) {
     </v-list>
   </v-card>
 </template>
+
+<style>
+.task-list {
+  height: 100%;
+}
+</style>

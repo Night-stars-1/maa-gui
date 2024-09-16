@@ -10,7 +10,7 @@ defineProps<{
   optionData: Option
 }>()
 
-const model = defineModel<PurpleParam[]>({ required: true, default: [] })
+const model = defineModel<PurpleParam[]>({ default: [] })
 
 defineEmits<{
   update: [value: PurpleParam[]]

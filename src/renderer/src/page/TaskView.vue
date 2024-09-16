@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-14 21:34:31
+ * @LastEditTime: 2024-09-16 17:18:01
 -->
 <script setup lang="ts">
 import { useSelectData } from '@stores/selectData'
@@ -40,7 +40,7 @@ function stop() {
   <v-row v-if="data?.task">
     <v-col>
       <v-card>
-        <v-list>
+        <v-list class="task-list">
           <VueDraggable
             v-model="data.task"
             :animation="150"
@@ -67,7 +67,7 @@ function stop() {
       </v-card>
     </v-col>
     <v-col class="d-flex">
-      <task-list-card v-model="selectData" :data="data" :is-save="true" />
+      <task-list-card v-model="selectData" class="select-task-list" :data="data" :is-save="true" />
       <v-row>
         <v-col>
           <v-btn @click="start">启动</v-btn>
@@ -82,6 +82,14 @@ function stop() {
 </template>
 
 <style lang="scss" scoped>
+.task-list {
+  height: calc(100vh - 22px);
+}
+
+.select-task-list {
+  height: calc(100vh - 68px);
+}
+
 .d-flex {
   align-items: center;
   flex-direction: column;
