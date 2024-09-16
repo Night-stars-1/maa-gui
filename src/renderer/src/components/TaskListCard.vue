@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-09 11:58:58
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 22:34:21
+ * @LastEditTime: 2024-09-16 17:03:21
 -->
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
@@ -96,15 +96,13 @@ function onAdd(event: any) {
                 ></v-btn>
               </template>
 
-              <template #default="{ isActive }">
-                <TaskSetting
-                  v-if="task.option"
-                  v-model="model[index].optionData"
-                  :option-list="task.option"
-                  :option-data="data.option"
-                  @click="isActive.value = true"
-                />
-              </template>
+              <TaskSetting
+                v-if="task.option"
+                v-model="model[index].optionData"
+                :option-list="task.option"
+                :option-data="data.option"
+                @update="$emit('update', model)"
+              />
             </v-dialog>
           </template>
         </v-list-item>

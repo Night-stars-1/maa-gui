@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-09 12:12:48
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-09 22:48:28
+ * @LastEditTime: 2024-09-16 17:05:20
 -->
 <script setup lang="ts">
 import { getTasks, setTask } from '@renderer/utils/taskUtils'
@@ -19,6 +19,7 @@ asyncComputed(async () => {
 
 const data = asyncComputed<Interface>(async () => JSON.parse(await window.api.getInterface()))
 async function onUpdate(name: string) {
+  console.log(1111, tasks.value[name])
   tasks.value = await setTask(name, tasks.value[name])
 }
 
