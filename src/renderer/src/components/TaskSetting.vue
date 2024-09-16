@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 22:46:10
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-07 17:42:46
+ * @LastEditTime: 2024-09-16 16:45:28
 -->
 <script setup lang="ts">
 const props = defineProps<{
@@ -27,7 +27,7 @@ const selectList = computed(() =>
 <template>
   <v-card title="任务设置">
     <v-card-text>
-      <v-combobox
+      <v-select
         v-for="(option, index) in optionList"
         :key="option"
         v-model="selectList[index]"
@@ -37,11 +37,12 @@ const selectList = computed(() =>
         item-value="param"
         :return-object="false"
         @update:model-value="emit('update:modelValue', selectList)"
-      ></v-combobox>
+      ></v-select>
     </v-card-text>
     <!-- <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn text="保存"></v-btn>
     </v-card-actions> -->
   </v-card>
+  <div />
 </template>
