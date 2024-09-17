@@ -19,7 +19,6 @@ asyncComputed(async () => {
 
 const data = asyncComputed<Interface>(async () => JSON.parse(await window.api.getInterface()))
 async function onUpdate(name: string) {
-  console.log(1111, tasks.value[name])
   tasks.value = await setTask(name, tasks.value[name])
 }
 

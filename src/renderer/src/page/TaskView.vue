@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-16 17:18:01
+ * @LastEditTime: 2024-09-17 22:40:14
 -->
 <script setup lang="ts">
 import { useSelectData } from '@stores/selectData'
@@ -46,7 +46,6 @@ function stop() {
             :animation="150"
             :group="{ name: 'people', pull: 'clone', put: false }"
             :sort="false"
-            class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded"
           >
             <v-list-item v-for="task in data.task" :key="task.name" :value="task.entry">
               <v-list-item-title class="no-select" :title="task.name">{{
