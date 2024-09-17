@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 22:34:33
+ * @LastEditTime: 2024-09-17 23:14:25
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -92,10 +92,9 @@ async function getChessboard(context: maa.Context, image: ArrayBuffer) {
   result[2048] = await context.run_recognition('2048_1_2048', image)
   for (const key in result) {
     const data = result[key]
-    if (!data) continue
+    if (!data || data.detail == 'null') continue
     const detail = JSON.parse(data.detail)
     const filtered: { box: number[]; score: number }[] = detail.filtered
-    console.log(filtered)
     filtered.forEach((item) => {
       const pos = getChessboardPos(item.box)
       chessboard[pos.y][pos.x] = Number(key)
@@ -138,6 +137,9 @@ const challenge2048: maa.CustomRecognizerCallback = async (self) => {
 export default (res: maa.Resource): Record<string, unknown> => {
   res.register_custom_recognizer('challenge2048', challenge2048)
   return {
+    'combine-swiping-one': {
+      next: ['challenge2048']
+    },
     challenge2048: {
       recognition: 'Custom',
       custom_recognition: 'challenge2048',
