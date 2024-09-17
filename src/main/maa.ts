@@ -9,7 +9,7 @@ import path from 'path'
 import maa from '@nekosu/maa-node'
 import { BrowserWindow, ipcMain } from 'electron'
 import { registerCustom, customParam } from './customMaa'
-import logger, { log } from './utils/logger'
+import { log } from './utils/logger'
 import { handleDebug } from './customMaa/debugType'
 import { BASE_RES_PATH, INTERFACE_PATH } from './reszip'
 

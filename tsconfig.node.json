@@ -5,6 +5,7 @@
     "src/main/**/*",
     "src/preload/**/*",
     "src/renderer/src/types/interface.d.ts",
+    "test.ts"
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,

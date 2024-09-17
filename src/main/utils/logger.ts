@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 15:10:47
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-08 22:46:02
+ * @LastEditTime: 2024-09-17 16:24:20
  */
 import { BrowserWindow } from 'electron'
 

@@ -8,3 +8,4 @@ logs
 resources/resource_picli
 *.local
 update.ts
+test.ts

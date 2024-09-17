@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 17:06:25
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-11 14:26:55
+ * @LastEditTime: 2024-09-17 22:25:39
 -->
 <script setup lang="ts">
 import { useLogMessage } from '@stores/logMessage'
@@ -14,7 +14,6 @@ const isAtBottom = ref(false)
 watch(
   () => messageList,
   () => {
-    console.log(isAtBottom.value)
     nextTick(() => {
       if (isAtBottom.value) scrollToBottom()
     })
@@ -48,12 +47,9 @@ onMounted(() => {
     nav
     @scroll="onScroll"
   >
-    <v-list-item
-      v-for="message in messageList"
-      :key="message"
-      :title="message"
-      class="log-msg"
-    ></v-list-item>
+    <v-list-item v-for="message in messageList" :key="message" class="log-msg">
+      <div v-html="message"></div>
+    </v-list-item>
   </v-list>
 </template>
 
@@ -62,7 +58,14 @@ onMounted(() => {
   max-height: 100vh;
 }
 .log-msg {
-  margin: 0px !important;
-  padding: 0px !important;
+  div {
+    font-size: 13.5px;
+    white-space: pre-wrap;
+    font-family: monospace;
+  }
+  & {
+    margin: 0px !important;
+    padding: 0px !important;
+  }
 }
 </style>

@@ -40,3 +40,6 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
+### Thanks
+- [2048-AI](https://github.com/aj-r/2048-AI)
