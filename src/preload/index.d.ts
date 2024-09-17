@@ -21,7 +21,7 @@ interface API {
   getDevices: () => Promise<AdbInfo[]>
   deviceLoad: (device: AdbInfo) => Promise<boolean>
   log: (
-    callback: (event: Electron.IpcRendererEvent, message: string) => void
+    callback: (event: Electron.IpcRendererEvent, message: string | string[]) => void
   ) => Electron.IpcRenderer
   update: (version: string, proxyUrl: string) => void
   isResUpdate: (proxyUrl: string) => Promise<string | boolean>

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 17:06:25
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 22:25:39
+ * @LastEditTime: 2024-09-18 00:27:48
 -->
 <script setup lang="ts">
 import { useLogMessage } from '@stores/logMessage'
@@ -47,9 +47,12 @@ onMounted(() => {
     nav
     @scroll="onScroll"
   >
-    <v-list-item v-for="message in messageList" :key="message" class="log-msg">
-      <div v-html="message"></div>
-    </v-list-item>
+    <v-list-item
+      v-for="message in messageList"
+      :key="message"
+      :title="message"
+      class="log-msg"
+    ></v-list-item>
   </v-list>
 </template>
 

@@ -82,14 +82,14 @@ class Grid {
   }
 
   show() {
-    let message = ''
+    const message: string[] = []
     this.tileList.forEach((item) => {
       // 对每个数字进行填充，使其与最长数字长度一致
       const paddedNumbers = item.map((num) => num.toString().padEnd(4, ' '))
-      message += paddedNumbers.join(' ')
-      message += '\n'
+      message.push(paddedNumbers.join(' '))
       console.log(item)
     })
+    message.push('-----------------')
     return message
   }
 

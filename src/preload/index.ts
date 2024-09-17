@@ -2,11 +2,10 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-14 22:30:32
+ * @LastEditTime: 2024-09-18 00:24:37
  */
 import { contextBridge, ipcRenderer, shell } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { AdbInfo } from './types/maa'
 
 // Custom APIs for renderer
 const api = {
@@ -14,7 +13,7 @@ const api = {
   stop: () => ipcRenderer.send('maa-stop'),
   getDevices: () => ipcRenderer.invoke('maa-get-devices'),
   deviceLoad: (device: AdbInfo) => ipcRenderer.invoke('maa-device-load', device),
-  log: (callback: (event: Electron.IpcRendererEvent, message: string) => void) =>
+  log: (callback: (event: Electron.IpcRendererEvent, message: string | string[]) => void) =>
     ipcRenderer.on('log-message', callback),
   update: (version: string, proxyUrl: string) => ipcRenderer.send('res-update', version, proxyUrl),
   isResUpdate: (proxyUrl: string) => ipcRenderer.invoke('res-is-update', proxyUrl),

@@ -10,7 +10,11 @@ export const useLogMessage = defineStore('logMessage', () => {
   const messageList = ref<string[]>([])
 
   window.api.log((_, message) => {
-    messageList.value.push(message)
+    if (typeof message === 'string') {
+      messageList.value.push(message)
+    } else {
+      messageList.value = messageList.value.concat(message)
+    }
   })
   return { messageList }
 })

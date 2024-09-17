@@ -2,13 +2,13 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 15:10:47
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 16:24:20
+ * @LastEditTime: 2024-09-18 00:28:08
  */
 import { BrowserWindow } from 'electron'
 
 let win: BrowserWindow
 
-function log(message: string) {
+function log(message: string | string[]) {
   win.webContents.send('log-message', message)
 }
 

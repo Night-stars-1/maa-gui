@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 23:14:25
+ * @LastEditTime: 2024-09-18 00:29:08
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -128,7 +128,7 @@ const challenge2048: maa.CustomRecognizerCallback = async (self) => {
   if (!controller) return null
   const result = await getChessboard(self.context, self.image)
   goal.grid.setTiles(result)
-  log(goal.grid.show() + '-----------------')
+  log(goal.grid.show())
   const nextMove = goal.nextMove()
   await swipe(controller, nextMove)
   return [{ x: 0, y: 0, width: 0, height: 0 }, '2048']
