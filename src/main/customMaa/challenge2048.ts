@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 00:29:08
+ * @LastEditTime: 2024-09-18 13:13:58
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -61,44 +61,26 @@ function getChessboardPos(box: number[]): {
   return { x, y }
 }
 
-async function getChessboard(context: maa.Context, image: ArrayBuffer) {
-  const result: {
-    [key: number]: {
-      name: string
-      algorithm: string
-      hit: boolean
-      box: maa.api.Rect
-      detail: string
-      raw: ArrayBuffer
-      draws: ArrayBuffer[]
-    } | null
-  } = {}
+async function getChessboard(context: maa.Context, image: ArrayBuffer, checkList: string[]) {
   const chessboard = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
   ]
-  result[2] = await context.run_recognition('2048_1_2', image)
-  result[4] = await context.run_recognition('2048_1_4', image)
-  result[8] = await context.run_recognition('2048_1_8', image)
-  result[16] = await context.run_recognition('2048_1_16', image)
-  result[32] = await context.run_recognition('2048_1_32', image)
-  result[64] = await context.run_recognition('2048_1_64', image)
-  result[128] = await context.run_recognition('2048_1_128', image)
-  result[256] = await context.run_recognition('2048_1_256', image)
-  result[512] = await context.run_recognition('2048_1_512', image)
-  result[1024] = await context.run_recognition('2048_1_1024', image)
-  result[2048] = await context.run_recognition('2048_1_2048', image)
-  for (const key in result) {
-    const data = result[key]
-    if (!data || data.detail == 'null') continue
-    const detail = JSON.parse(data.detail)
-    const filtered: { box: number[]; score: number }[] = detail.filtered
-    filtered.forEach((item) => {
-      const pos = getChessboardPos(item.box)
-      chessboard[pos.y][pos.x] = Number(key)
-    })
+  let n = 0
+  for (let i = 0; i < checkList.length; i++) {
+    if (n >= 16) break
+    const data = await context.run_recognition(checkList[i], image)
+    if (data && data.detail !== 'null') {
+      const detail = JSON.parse(data.detail)
+      const filtered: { box: number[]; score: number }[] = detail.filtered
+      filtered.forEach((item) => {
+        n++
+        const pos = getChessboardPos(item.box)
+        chessboard[pos.y][pos.x] = 2 * Math.pow(2, i)
+      })
+    }
   }
   return chessboard
 }
@@ -125,8 +107,9 @@ async function swipe(controller: maa.ControllerBase, type: number) {
 
 const challenge2048: maa.CustomRecognizerCallback = async (self) => {
   const controller = self.context.tasker.controller
+  const checkList = self.param?.['checkList']
   if (!controller) return null
-  const result = await getChessboard(self.context, self.image)
+  const result = await getChessboard(self.context, self.image, checkList)
   goal.grid.setTiles(result)
   log(goal.grid.show())
   const nextMove = goal.nextMove()
@@ -143,6 +126,21 @@ export default (res: maa.Resource): Record<string, unknown> => {
     challenge2048: {
       recognition: 'Custom',
       custom_recognition: 'challenge2048',
+      custom_recognition_param: {
+        checkList: [
+          '2048_1_2',
+          '2048_1_4',
+          '2048_1_8',
+          '2048_1_16',
+          '2048_1_32',
+          '2048_1_64',
+          '2048_1_128',
+          '2048_1_256',
+          '2048_1_512',
+          '2048_1_1024',
+          '2048_1_2048'
+        ]
+      },
       post_wait_freezes: 10,
       next: ['challenge2048']
     }
