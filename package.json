@@ -30,7 +30,6 @@
     "minio": "^8.0.1",
     "pinia": "^2.2.2",
     "sass": "^1.78.0",
-    "sharp": "^0.33.5",
     "unplugin-auto-import": "^0.18.3",
     "unplugin-vue-components": "^0.27.4",
     "unzipper": "^0.12.3",
