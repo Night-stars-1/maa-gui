@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 13:13:58
+ * @LastEditTime: 2024-09-18 13:31:21
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -121,9 +121,15 @@ export default (res: maa.Resource): Record<string, unknown> => {
   res.register_custom_recognizer('challenge2048', challenge2048)
   return {
     'combine-swiping-one': {
-      next: ['challenge2048']
+      next: ['challenge2048_1']
     },
-    challenge2048: {
+    'combine-swiping-two': {
+      next: ['challenge2048_hh']
+    },
+    'combine-swiping-three': {
+      next: ['challenge2048_hh']
+    },
+    challenge2048_1: {
       recognition: 'Custom',
       custom_recognition: 'challenge2048',
       custom_recognition_param: {
@@ -142,7 +148,55 @@ export default (res: maa.Resource): Record<string, unknown> => {
         ]
       },
       post_wait_freezes: 10,
-      next: ['challenge2048']
+      next: ['challenge2048_1']
+    },
+    challenge2048_hh: {
+      recognition: 'Custom',
+      custom_recognition: 'challenge2048',
+      custom_recognition_param: {
+        checkList: [
+          '2048_hh_1',
+          '2048_hh_2',
+          '2048_hh_3',
+          '2048_hh_4',
+          '2048_hh_5',
+          '2048_hh_6',
+          '2048_hh_7',
+          '2048_hh_8',
+          '2048_hh_9',
+          '2048_hh_10',
+          '2048_hh_11',
+          '2048_hh_12'
+        ]
+      },
+      post_wait_freezes: 10,
+      next: ['challenge2048_hh']
+    },
+    challenge2048_cd: {
+      recognition: 'Custom',
+      custom_recognition: 'challenge2048',
+      custom_recognition_param: {
+        checkList: [
+          '2048_cd_1',
+          '2048_cd_2',
+          '2048_cd_3',
+          '2048_cd_4',
+          '2048_cd_5',
+          '2048_cd_6',
+          '2048_cd_7',
+          '2048_cd_8',
+          '2048_cd_9',
+          '2048_cd_10',
+          '2048_cd_11',
+          '2048_cd_12',
+          '2048_cd_13',
+          '2048_cd_14',
+          '2048_cd_15',
+          '2048_cd_16'
+        ]
+      },
+      post_wait_freezes: 10,
+      next: ['challenge2048_cd']
     }
   }
 }
