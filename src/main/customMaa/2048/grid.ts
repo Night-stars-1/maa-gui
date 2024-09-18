@@ -1,8 +1,10 @@
+import { logger } from '../../utils/logger'
+
 /*
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:18:40
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 22:17:13
+ * @LastEditTime: 2024-09-18 18:39:26
  */
 class Grid {
   /** [y, x] */
@@ -87,9 +89,9 @@ class Grid {
       // 对每个数字进行填充，使其与最长数字长度一致
       const paddedNumbers = item.map((num) => num.toString().padEnd(4, ' '))
       message.push(paddedNumbers.join(' '))
-      console.log(item)
     })
     message.push('-----------------')
+    message.forEach((item) => logger.info(item))
     return message
   }
 

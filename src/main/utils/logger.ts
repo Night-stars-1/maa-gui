@@ -2,11 +2,27 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 15:10:47
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 00:28:08
+ * @LastEditTime: 2024-09-18 17:07:50
  */
 import { BrowserWindow } from 'electron'
+import path from 'path'
+import { createLogger, format, transports } from 'winston'
+import { BASE_RES_PATH } from '.'
 
 let win: BrowserWindow
+
+// 创建 logger 实例
+const logger = createLogger({
+  level: 'info', // 日志级别
+  format: format.combine(
+    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    format.printf((info) => `${info.timestamp} [${info.level}]: ${info.message}`)
+  ),
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename: path.join(BASE_RES_PATH, 'logs', 'maa-gui.log') })
+  ]
+})
 
 function log(message: string | string[]) {
   win.webContents.send('log-message', message)
@@ -25,3 +41,5 @@ export { log, sendStartRecognize, sendEndRecognize }
 export default (_win: BrowserWindow) => {
   win = _win
 }
+
+export { logger }

@@ -1,6 +1,6 @@
 {
   "name": "m5a-gui",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
   "author": "example.com",
@@ -30,11 +30,13 @@
     "minio": "^8.0.1",
     "pinia": "^2.2.2",
     "sass": "^1.78.0",
+    "sharp": "^0.33.5",
     "unplugin-auto-import": "^0.18.3",
     "unplugin-vue-components": "^0.27.4",
     "unzipper": "^0.12.3",
     "vue-draggable-plus": "^0.5.3",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "winston": "^3.14.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 13:31:21
+ * @LastEditTime: 2024-09-18 22:50:34
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -16,16 +16,10 @@ const tileList = [
   [0, 0, 0, 0],
   [0, 0, 0, 0]
 ]
+
 const grid = new Grid(tileList)
 const game = new GameController(grid)
 const goal = new Goal(game)
-// let direction: number
-// for (let i = 0; i < 10; i++) {
-//   direction = goal.nextMove()
-//   console.log(goal.game.getDirection(direction))
-//   goal.game.moveTiles(direction)
-//   grid.show()
-// }
 
 /**
  * 获取棋子在棋盘上的坐标
@@ -68,19 +62,18 @@ async function getChessboard(context: maa.Context, image: ArrayBuffer, checkList
     [0, 0, 0, 0],
     [0, 0, 0, 0]
   ]
-  let n = 0
-  for (let i = 0; i < checkList.length; i++) {
-    if (n >= 16) break
-    const data = await context.run_recognition(checkList[i], image)
-    if (data && data.detail !== 'null') {
-      const detail = JSON.parse(data.detail)
-      const filtered: { box: number[]; score: number }[] = detail.filtered
-      filtered.forEach((item) => {
-        n++
-        const pos = getChessboardPos(item.box)
-        chessboard[pos.y][pos.x] = 2 * Math.pow(2, i)
-      })
-    }
+  const recognitionPromises = checkList.map((item) => context.run_recognition(item, image))
+
+  const results = await Promise.all(recognitionPromises)
+  for (let i = 0; i < results.length; i++) {
+    const data = results[i]
+    if (!data || data.detail == 'null') continue
+    const detail = JSON.parse(data.detail)
+    const filtered: { box: number[]; score: number }[] = detail.filtered
+    filtered.forEach((item) => {
+      const pos = getChessboardPos(item.box)
+      chessboard[pos.y][pos.x] = 2 * Math.pow(2, i)
+    })
   }
   return chessboard
 }
@@ -127,7 +120,7 @@ export default (res: maa.Resource): Record<string, unknown> => {
       next: ['challenge2048_hh']
     },
     'combine-swiping-three': {
-      next: ['challenge2048_hh']
+      next: ['challenge2048_cd']
     },
     challenge2048_1: {
       recognition: 'Custom',
@@ -143,8 +136,7 @@ export default (res: maa.Resource): Record<string, unknown> => {
           '2048_1_128',
           '2048_1_256',
           '2048_1_512',
-          '2048_1_1024',
-          '2048_1_2048'
+          '2048_1_1024'
         ]
       },
       post_wait_freezes: 10,
@@ -165,8 +157,7 @@ export default (res: maa.Resource): Record<string, unknown> => {
           '2048_hh_8',
           '2048_hh_9',
           '2048_hh_10',
-          '2048_hh_11',
-          '2048_hh_12'
+          '2048_hh_11'
         ]
       },
       post_wait_freezes: 10,
@@ -191,8 +182,7 @@ export default (res: maa.Resource): Record<string, unknown> => {
           '2048_cd_12',
           '2048_cd_13',
           '2048_cd_14',
-          '2048_cd_15',
-          '2048_cd_16'
+          '2048_cd_15'
         ]
       },
       post_wait_freezes: 10,

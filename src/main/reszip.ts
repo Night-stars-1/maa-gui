@@ -3,17 +3,18 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:52:41
+ * @LastEditTime: 2024-09-18 17:09:35
  */
 import fs from 'fs'
 import path from 'path'
 import axios from 'axios'
 import unzipper from 'unzipper'
-import { app, ipcMain, IpcMainEvent, shell } from 'electron'
+import { ipcMain, IpcMainEvent, shell } from 'electron'
 import { upResources } from './maa'
 import { createToast } from './utils/toast'
+import { BASE_RES_PATH } from './utils'
+import { logger } from './utils/logger'
 
-const BASE_RES_PATH = path.join(app.getPath('userData'), import.meta.env.VITE_MAIN_UNRES_OUT_DIR)
 const VERSION_PATH = path.join(BASE_RES_PATH, 'version.txt')
 const INTERFACE_PATH = path.join(BASE_RES_PATH, 'interface.json')
 
@@ -26,7 +27,7 @@ async function isUpdate(proxyUrl: string) {
     const localVersion = fs.readFileSync(VERSION_PATH, 'utf-8').trim()
     return version !== localVersion ? version : false
   } catch (error: any) {
-    console.error(error)
+    logger.error(error)
     return version
   }
 }
@@ -45,7 +46,7 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
     })
     // 将文件写入指定路径
     fs.writeFileSync(path.join(BASE_RES_PATH, 'res.zip'), response.data)
-    console.log('资源包下载成功')
+    logger.info('资源包下载成功')
     event.sender.send('res-download', `资源包下载完成`)
     extractZip(
       path.join(BASE_RES_PATH, 'res.zip'),
@@ -54,8 +55,8 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
       event
     )
   } catch (error: any) {
-    console.log(error.code)
-    console.error('下载资源包时发生错误:', error.message)
+    logger.info(error.code)
+    logger.error('下载资源包时发生错误:', error.message)
     switch (error.code) {
       case 'ENOTFOUND':
         createToast(`网络异常，请设置代理`)
@@ -74,15 +75,15 @@ function extractZip(zipPath: string, targetDir: string, version: string, event: 
   fs.mkdirSync(BASE_RES_PATH, { recursive: true })
   try {
     fs.rmSync(path.join(BASE_RES_PATH, 'image'), { recursive: true, force: true })
-    console.log(`文件夹 ${path.join(BASE_RES_PATH, 'image')} 删除成功`)
+    logger.info(`文件夹 ${path.join(BASE_RES_PATH, 'image')} 删除成功`)
   } catch (err) {
-    console.error(`删除文件夹时出错: ${err}`)
+    logger.error(`删除文件夹时出错: ${err}`)
   }
   try {
     fs.rmSync(path.join(BASE_RES_PATH, 'pipeline'), { recursive: true, force: true })
-    console.log(`文件夹 ${path.join(BASE_RES_PATH, 'pipeline')} 删除成功`)
+    logger.info(`文件夹 ${path.join(BASE_RES_PATH, 'pipeline')} 删除成功`)
   } catch (err) {
-    console.error(`删除文件夹时出错: ${err}`)
+    logger.error(`删除文件夹时出错: ${err}`)
   }
 
   // 统计 zip 文件中的总文件数
@@ -153,7 +154,7 @@ function copyOcrModel() {
     { recursive: true },
     (err) => {
       if (err) {
-        console.error('复制文件夹时出错:', err)
+        logger.error('复制文件夹时出错:', err)
       }
     }
   )

@@ -7,6 +7,7 @@
 import { autoUpdater } from 'electron-updater'
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
+import { logger } from './utils/logger'
 
 async function isGuiUpdate(proxyUrl: string) {
   autoUpdater.requestHeaders = {
@@ -32,7 +33,7 @@ export default (window: BrowserWindow) => {
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.on('checking-for-update', () => {
-    console.log('检查更新中...')
+    logger.info('检查更新中...')
   })
 
   autoUpdater.on('update-available', (info) => {
@@ -46,11 +47,11 @@ export default (window: BrowserWindow) => {
 
   autoUpdater.on('update-not-available', (info) => {
     // 更新不可用
-    console.log('更新不可用', info)
+    logger.info('更新不可用', info)
   })
 
   autoUpdater.on('error', (err) => {
-    console.log(err)
+    logger.info(err)
   })
 
   autoUpdater.on('update-downloaded', () => {

@@ -2,14 +2,14 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 17:05:32
+ * @LastEditTime: 2024-09-18 21:38:44
  */
 import fs from 'fs'
 import path from 'path'
 import maa from '@nekosu/maa-node'
 import { BrowserWindow, ipcMain } from 'electron'
 import { registerCustom, customParam } from './customMaa'
-import { log } from './utils/logger'
+import { log, logger } from './utils/logger'
 import { handleDebug } from './customMaa/debugType'
 import { BASE_RES_PATH, INTERFACE_PATH } from './reszip'
 
@@ -57,7 +57,7 @@ async function init(device: AdbInfo) {
   )
   ctrl.notify = (msg, detail) => {
     log(`${msg} ${detail}`)
-    console.log(msg, detail)
+    logger.info(msg, detail)
   }
   // 连接设备
   await ctrl.post_connection().wait()
@@ -66,7 +66,7 @@ async function init(device: AdbInfo) {
   res = new maa.Resource()
   res.notify = (msg, detail) => {
     log(`${msg} ${detail}`)
-    console.log(msg, detail)
+    logger.info(msg, detail)
   }
 
   // 加载资源
@@ -90,7 +90,6 @@ async function init(device: AdbInfo) {
   tskr.bind(res)
 
   registerCustom(res)
-
   return tskr.inited
 }
 
