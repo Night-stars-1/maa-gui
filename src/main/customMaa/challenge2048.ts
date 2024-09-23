@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-17 13:21:51
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 22:50:34
+ * @LastEditTime: 2024-09-23 21:42:47
  */
 import * as maa from '@nekosu/maa-node'
 import Goal from './2048/goal'
@@ -113,14 +113,44 @@ const challenge2048: maa.CustomRecognizerCallback = async (self) => {
 export default (res: maa.Resource): Record<string, unknown> => {
   res.register_custom_recognizer('challenge2048', challenge2048)
   return {
-    'combine-swiping-one': {
-      next: ['challenge2048_1']
+    'combine-chair': {
+      recognition: 'OCR',
+      expected: '椅',
+      action: 'Click',
+      next: ['combine-game-chair']
     },
-    'combine-swiping-two': {
-      next: ['challenge2048_hh']
+    'combine-game-chair': {
+      recognition: 'OCR',
+      expected: '开始游戏',
+      action: 'Click',
+      post_delay: 2000,
+      next: ['combine-challenge', 'challenge2048_1']
     },
-    'combine-swiping-three': {
-      next: ['challenge2048_cd']
+    'combine-dynasty': {
+      recognition: 'OCR',
+      expected: '朝代',
+      action: 'Click',
+      next: ['combine-game-dynasty']
+    },
+    'combine-game-dynasty': {
+      recognition: 'OCR',
+      expected: '开始游戏',
+      action: 'Click',
+      post_delay: 2000,
+      next: ['combine-challenge', 'challenge2048_cd']
+    },
+    'combine-ship': {
+      recognition: 'OCR',
+      expected: '船',
+      action: 'Click',
+      next: ['combine-game-ship']
+    },
+    'combine-game-ship': {
+      recognition: 'OCR',
+      expected: '开始游戏',
+      action: 'Click',
+      post_delay: 2000,
+      next: ['combine-challenge', 'challenge2048_hh']
     },
     challenge2048_1: {
       recognition: 'Custom',

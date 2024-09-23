@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 19:52:43
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 17:10:19
+ * @LastEditTime: 2024-09-20 10:44:34
  */
 import { log, logger, sendEndRecognize, sendStartRecognize } from '../utils/logger'
 
@@ -26,7 +26,7 @@ function handleDebug(data: DebugData) {
     default:
       if (type.startsWith('Task.Debug')) return
       log(`${type} ${JSON.stringify(data.detail)}`)
-      logger.error(`${type} ${JSON.stringify(data.detail)}`)
+      logger.info(`${type} ${JSON.stringify(data.detail)}`)
   }
 }
 
