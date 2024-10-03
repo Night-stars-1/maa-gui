@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 15:14:53
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 21:38:44
+ * @LastEditTime: 2024-10-03 21:58:24
  */
 import fs from 'fs'
 import path from 'path'
@@ -106,7 +106,7 @@ async function start(task: Task[]) {
   for (const t of task) {
     const param: Record<string, unknown> = {}
     t.optionData?.forEach((item) => Object.assign(param, item))
-    t.param && Object.assign(param, t.param)
+    t.pipeline_override && Object.assign(param, t.pipeline_override)
     Object.assign(param, customParam)
     // await inst.post_task('MyTask', param).wait()
     await tskr.post_pipeline(t.entry, param).wait()

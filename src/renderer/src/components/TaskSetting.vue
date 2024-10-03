@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 22:46:10
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-17 22:58:30
+ * @LastEditTime: 2024-10-03 22:00:12
 -->
 <script setup lang="ts">
 const props = defineProps<{
@@ -22,7 +22,7 @@ onMounted(
       if (model.value[index]) {
         return model.value[index]
       } else {
-        return props.optionData[option].cases[0].param
+        return props.optionData[option].cases[0].pipeline_override
       }
     }))
 )
@@ -38,7 +38,7 @@ onMounted(
         :label="option"
         :items="optionData[option]?.cases"
         item-title="name"
-        item-value="param"
+        item-value="pipeline_override"
         :return-object="false"
         @update:model-value="$emit('update', model)"
       ></v-select>

@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 13:14:57
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-25 12:31:25
+ * @LastEditTime: 2024-10-03 22:01:23
  */
 interface Interface {
   controller: Controller[]
@@ -27,7 +27,6 @@ interface Cases {
 
 interface CaseItem {
   name: string
-  param?: PurpleParam
   pipeline_override: PurpleParam
 }
 
@@ -46,7 +45,7 @@ interface Task {
   id: number
   name: string
   entry: string
-  param?: PurpleParam
+  pipeline_override?: PurpleParam
   option?: string[]
   optionData?: PurpleParam[]
 }

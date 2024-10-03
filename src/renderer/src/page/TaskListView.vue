@@ -38,7 +38,7 @@ function start(task: Task[]) {
           <v-icon :icon="expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"></v-icon>
         </template>
       </v-expansion-panel-title>
-      <v-expansion-panel-text>
+      <v-expansion-panel-text v-if="data">
         <task-list-card
           v-model="tasks[name]"
           :data="data"

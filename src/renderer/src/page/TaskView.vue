@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-06 23:41:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-25 12:33:21
+ * @LastEditTime: 2024-10-03 22:00:23
 -->
 <script setup lang="ts">
 import { useSelectData } from '@stores/selectData'
@@ -23,7 +23,7 @@ function setSelectData(task: Task) {
   if (task.option) {
     task.optionData = task.option.map<PurpleParam>(
       (item) =>
-        data.value.option[item].cases[0].pipeline_override || data.value.option[item].cases[0].param
+        data.value!.option[item].cases[0].pipeline_override
     )
   }
   task.id = selectData.value.length + 1
