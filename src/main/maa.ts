@@ -14,7 +14,7 @@ import { handleDebug } from './customMaa/debugType'
 import { BASE_RES_PATH, INTERFACE_PATH } from './reszip'
 
 maa.Global.log_dir = path.join(BASE_RES_PATH, 'logs')
-maa.Global.debug_message = true
+maa.Global.debug_mode = true
 
 let tskr: maa.Tasker
 let win: BrowserWindow
@@ -170,7 +170,7 @@ ipcMain.handle('maa-get-interface', () => getInterface())
 ipcMain.handle('maa-query-recognition-detail', (_, recoId) => queryRecognitionDetail(recoId))
 
 ipcMain.on('maa-debug', (_, isDebug: boolean) => {
-  maa.Global.debug_message = isDebug
+  maa.Global.debug_mode = isDebug
 })
 
 export default (_win: BrowserWindow) => {
