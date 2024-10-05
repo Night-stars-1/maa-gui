@@ -3,57 +3,92 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 20:00:36
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 17:06:07
+ * @LastEditTime: 2024-10-05 15:33:06
  */
-interface DetailListToRecognize {
-  msg: 'Task.Debug.ListToRecognize'
+interface NextListStarting {
+  msg: 'Task.NextList.Starting'
   detail: {
     task_id: number
-    /** 入口事件名 */
-    entry: string
-    uuid: string
-    hash: string
     /** 当前事件名 */
-    current: string
+    name: string
+    /** 该事件的next列表 */
+    list: string[]
+  }
+}
+interface NextListSucceeded {
+  msg: 'Task.NextList.Succeeded'
+  detail: {
+    task_id: number
+    /** 当前事件名 */
+    name: string
+    /** 该事件的next列表 */
+    list: string[]
+  }
+}
+interface NextListFailed {
+  msg: 'Task.NextList.Failed'
+  detail: {
+    task_id: number
+    /** 当前事件名 */
+    name: string
     /** 该事件的next列表 */
     list: string[]
   }
 }
 
-interface DetailMissAll {
-  msg: 'Task.Debug.MissAll'
+interface RecognitionStarting {
+  msg: 'Task.Recognition.Starting'
   detail: {
-    pre_hit_task: string
-    list: string[]
+    /** 当前任务名 */
+    name: string
+    reco_id: number
+    task_id: number
+  }
+}
+interface RecognitionSucceeded {
+  msg: 'Task.Recognition.Succeeded'
+  detail: {
+    /** 当前任务名 */
+    name: string
+    reco_id: number
+    task_id: number
+  }
+}
+interface RecognitionFailed {
+  msg: 'Task.Recognition.Failed'
+  detail: {
+    /** 当前任务名 */
+    name: string
+    reco_id: number
+    task_id: number
   }
 }
 
-type test = {
-  msg: 'Task.Debug.MissAll'
-}
-
-interface DetailRecognitionResult {
-  msg: 'Task.Debug.RecognitionResult'
+interface ActionStarting {
+  msg: 'Task.Action.Starting'
   detail: {
+    /** 当前任务名 */
+    name: string
+    reco_id: number
     task_id: number
-    /** 事件名 */
-    entry: string
-    uuid: string
-    hash: string
-    current: string
-    recognition: {
-      reco_id: number
-      /** next里的任务名称 */
-      name: string
-      /** 识别的矩阵坐标, 识别失败的时为 null? */
-      box: [number, number, number, number] | null
-      detail: {
-        all: any[]
-        /** 识别失败的时为 null */
-        best: any[] | null
-        filtered: any[]
-      } | null
-    }
+  }
+}
+interface ActionSucceeded {
+  msg: 'Task.Action.Succeeded'
+  detail: {
+    /** 当前任务名 */
+    name: string
+    reco_id: number
+    task_id: number
+  }
+}
+interface ActionFailed {
+  msg: 'Task.Action.Failed'
+  detail: {
+    /** 当前任务名 */
+    name: string
+    reco_id: number
+    task_id: number
   }
 }
 
@@ -62,4 +97,14 @@ interface OtherDebug {
   detail: any
 }
 
-type DebugData = DetailListToRecognize | DetailMissAll | DetailRecognitionResult | OtherDebug
+type DebugData =
+  | NextListStarting
+  | NextListSucceeded
+  | NextListFailed
+  | RecognitionStarting
+  | RecognitionSucceeded
+  | RecognitionFailed
+  | ActionStarting
+  | ActionSucceeded
+  | ActionFailed
+  | OtherDebug

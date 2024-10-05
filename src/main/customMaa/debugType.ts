@@ -2,31 +2,33 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 19:52:43
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-20 10:44:34
+ * @LastEditTime: 2024-10-05 03:20:41
  */
 import { log, logger, sendEndRecognize, sendStartRecognize } from '../utils/logger'
 
 function handleDebug(data: DebugData) {
   const type = data.msg
   switch (type) {
-    case 'Task.Debug.ListToRecognize':
-      sendStartRecognize(data.detail.current, data.detail.list)
+    case 'Task.NextList.Starting':
+      sendStartRecognize(data.detail.name, data.detail.list)
       break
-    case 'Task.Debug.MissAll':
-      // console.log('------------------------------')
-      // console.log('MissAll', detail.pre_hit_task, detail.list)
+    case 'Task.NextList.Failed':
       break
-    case 'Task.Debug.RecognitionResult':
-      sendEndRecognize(
-        data.detail.recognition.reco_id,
-        data.detail.recognition.name,
-        data.detail.recognition.box ? true : false
-      )
+    case 'Task.NextList.Succeeded':
+      break
+    case 'Task.Recognition.Starting':
+      break
+    case 'Task.Recognition.Succeeded':
+      sendEndRecognize(data.detail.reco_id, data.detail.name, true)
+      break
+    case 'Task.Recognition.Failed':
+      sendEndRecognize(data.detail.reco_id, data.detail.name, false)
       break
     default:
       if (type.startsWith('Task.Debug')) return
       log(`${type} ${JSON.stringify(data.detail)}`)
-      logger.info(`${type} ${JSON.stringify(data.detail)}`)
+      // logger.debug(`${type} ${JSON.stringify(data.detail)}`)
+      break
   }
 }
 
