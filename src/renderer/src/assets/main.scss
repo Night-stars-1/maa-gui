@@ -37,3 +37,13 @@
 .clickable {
   cursor: pointer; /* 设置为点击的手形图标 */
 }
+
+.v-timeline {
+  .v-virtual-scroll__item {
+    display: grid;
+  justify-content: start;
+    grid-auto-flow: dense;
+    position: relative;
+    padding-right: 10px;
+  }
+}

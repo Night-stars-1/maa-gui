@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 12:59:24
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:14:38
+ * @LastEditTime: 2024-10-05 16:41:32
  */
 import type { ElectronAPI } from '@electron-toolkit/preload'
 import type * as maa from '@nekosu/maa-node'
@@ -27,18 +27,14 @@ interface API {
   isResUpdate: (proxyUrl: string) => Promise<string | boolean>
   getInterface: () => Promise<string>
   onStartRecognize: (
-    callback: (
-      event: Electron.IpcRendererEvent,
-      name: DetailListToRecognize['detail']['current'],
-      next: DetailListToRecognize['detail']['list']
-    ) => void
+    callback: (event: Electron.IpcRendererEvent, name: string, next: string[]) => void
   ) => Electron.IpcRenderer
   onEndRecognize: (
     callback: (
       event: Electron.IpcRendererEvent,
-      id: DetailRecognitionResult['detail']['task_id'],
+      id: number,
       /** next里的任务名称 */
-      name: DetailRecognitionResult['detail']['recognition']['name'],
+      name: string,
       status: boolean
     ) => void
   ) => Electron.IpcRenderer

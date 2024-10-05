@@ -2,7 +2,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 17:06:25
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 00:58:41
+ * @LastEditTime: 2024-10-05 16:49:46
 -->
 <script setup lang="ts">
 import { useLogMessage } from '@stores/logMessage'
@@ -60,7 +60,7 @@ onMounted(() => {
   </v-list> -->
   <v-virtual-scroll
     ref="scrollContainer"
-    class="scroll-container"
+    class="log scroll-container"
     :items="messageList"
     @scroll="onScroll"
   >
@@ -86,7 +86,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.scroll-container .v-virtual-scroll__item {
+.log.scroll-container .v-virtual-scroll__item {
   font-size: 13.5px;
   white-space: pre-wrap;
   font-family: monospace;

@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-18 17:09:35
+ * @LastEditTime: 2024-10-05 17:04:33
  */
 import fs from 'fs'
 import path from 'path'
@@ -17,6 +17,7 @@ import { logger } from './utils/logger'
 
 const VERSION_PATH = path.join(BASE_RES_PATH, 'version.txt')
 const INTERFACE_PATH = path.join(BASE_RES_PATH, 'interface.json')
+const EVENT_PATH = path.join(BASE_RES_PATH, 'event.json')
 
 async function isUpdate(proxyUrl: string) {
   let version = '0'
@@ -161,6 +162,13 @@ function copyOcrModel() {
 }
 copyOcrModel()
 
+function getEvent() {
+  const data = fs.readFileSync(EVENT_PATH, {
+    encoding: 'utf-8'
+  })
+  return data
+}
+
 // 监听渲染进程的请求，执行解压任务
 ipcMain.on('res-update', (event, version, proxyUrl) => {
   update(version, proxyUrl, event)
@@ -174,4 +182,4 @@ ipcMain.on('res-open-folder', () => {
   shell.openPath(BASE_RES_PATH)
 })
 
-export { BASE_RES_PATH, INTERFACE_PATH }
+export { BASE_RES_PATH, INTERFACE_PATH, getEvent }
