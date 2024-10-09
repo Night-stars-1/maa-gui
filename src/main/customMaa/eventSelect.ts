@@ -2,13 +2,11 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-08 14:57:20
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-09-15 16:40:06
+ * @LastEditTime: 2024-10-09 13:54:24
  */
 import * as maa from '@nekosu/maa-node'
 import { log } from '../utils/logger'
-import { getEvent } from '../reszip'
-
-const EVENT_DATA: { [key: string]: string } = JSON.parse(getEvent())
+import { EVENT_DATA } from '../reszip'
 
 const eventSelect: maa.CustomRecognizerCallback = async (self) => {
   const data = await self.context.run_recognition('OCR', self.image, {

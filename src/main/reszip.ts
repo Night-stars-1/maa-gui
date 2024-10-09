@@ -3,7 +3,7 @@
  * @Author: Night-stars-1 nujj1042633805@gmail.com
  * @Date: 2024-09-07 22:51:22
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2024-10-05 17:04:33
+ * @LastEditTime: 2024-10-09 13:52:12
  */
 import fs from 'fs'
 import path from 'path'
@@ -55,6 +55,7 @@ async function update(version: string, proxyUrl: string, event: IpcMainEvent) {
       version,
       event
     )
+    EVENT_DATA = getEvent()
   } catch (error: any) {
     logger.info(error.code)
     logger.error('下载资源包时发生错误:', error.message)
@@ -162,13 +163,18 @@ function copyOcrModel() {
 }
 copyOcrModel()
 
+let EVENT_DATA: { [key: string]: string } = getEvent()
 function getEvent() {
-  const data = fs.readFileSync(EVENT_PATH, {
-    encoding: 'utf-8'
-  })
+  let data: { [key: string]: string } = {}
+  if (fs.existsSync(EVENT_PATH)) {
+    data = JSON.parse(
+      fs.readFileSync(EVENT_PATH, {
+        encoding: 'utf-8'
+      })
+    )
+  }
   return data
 }
-
 // 监听渲染进程的请求，执行解压任务
 ipcMain.on('res-update', (event, version, proxyUrl) => {
   update(version, proxyUrl, event)
@@ -182,4 +188,4 @@ ipcMain.on('res-open-folder', () => {
   shell.openPath(BASE_RES_PATH)
 })
 
-export { BASE_RES_PATH, INTERFACE_PATH, getEvent }
+export { BASE_RES_PATH, INTERFACE_PATH, EVENT_DATA }
