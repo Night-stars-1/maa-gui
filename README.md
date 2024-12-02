@@ -77,4 +77,4 @@ function registerCustom(res: maa.Resource) {
 }
 ```
 ### Thanks
-- [2048-AI](https://github.com/aj-r/2048-AI)
+- [MaaFramework](https://github.com/MaaXYZ/MaaFramework)
