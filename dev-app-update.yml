@@ -1,5 +1,6 @@
 provider: generic
-url: https://goda.srap.link/auto-updates
+# 这里的更新url需要更改成你自己的
+url: https://example.com/auto-updates
 updaterCacheDirName: mma-gui-updater
 # provider: github
 # owner: Night-stars-1
