@@ -4,7 +4,7 @@
  * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
  * @LastEditTime: 2024-12-02 15:25:12
 -->
-# maa-gui
+# MFW-ELE-GUI
 
 基于MAA流水线协议的GUI
 
