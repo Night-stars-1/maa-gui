@@ -42,7 +42,7 @@ $ pnpm build:linux
 ```
 
 ## MAA行为扩展
-> 在`src\main\customMaa`中注册自定义行为，以达到更灵活的控制
+> 在`src\main\customMaa`中注册自定义行为，以达到更灵活的控制  
 **最简示例：**
 ```json
 {
